@@ -1,24 +1,55 @@
 ---
-import { personal, meta, type Lang } from '../lib/data';
+import { personal, type Lang } from '../lib/data';
 
 export interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
-const m = meta[lang];
 ---
 
 <section class="hero" aria-label={lang === 'es' ? 'Presentación' : 'Introduction'}>
+  <div class="hero-bg" aria-hidden="true">
+    <picture>
+      <source media="(max-width: 700px) and (orientation: portrait)" srcset="/assets/hero/hero-poster-mobile-540.webp" />
+      <source media="(min-width: 1440px)" srcset="/assets/hero/hero-poster-1920.webp" />
+      <img
+        class="hero-poster"
+        src="/assets/hero/hero-poster-1280.webp"
+        alt=""
+        width="1280"
+        height="720"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </picture>
+    <video
+      class="hero-video"
+      muted
+      loop
+      playsinline
+      preload="none"
+      disablepictureinpicture
+      tabindex="-1"
+      data-hero-video
+      hidden
+    ></video>
+  </div>
+  <div class="hero-fade" aria-hidden="true"></div>
+
   <div class="container hero-inner">
     <div class="hero-content">
       <p class="hero-greeting">{lang === 'es' ? 'Hola, soy' : 'Hi, I’m'}</p>
       <h1 class="hero-name">Gary Daniel Abrigo</h1>
-      <p class="hero-role">{m.role}</p>
-      <p class="hero-tagline">{m.valueLine}</p>
+      <p class="hero-role">{lang === 'es' ? 'Analista de datos · Data Science' : 'Data Analyst · Data Science'}</p>
+      <p class="hero-tagline">
+        {lang === 'es'
+          ? 'Convierto datos en decisiones: tableros con historia, modelos evaluados con honestidad.'
+          : 'Turning data into decisions: dashboards with a story, models evaluated honestly.'}
+      </p>
       <div class="hero-actions">
-        <a href="#projects" class="btn btn-primary">{m.ctaProjects}</a>
-        <a href={lang === 'es' ? '/cv/' : '/en/cv/'} class="btn btn-secondary">{m.ctaCv}</a>
+        <a href="#projects" class="btn btn-primary">{lang === 'es' ? 'Ver proyectos' : 'View projects'}</a>
+        <a href={lang === 'es' ? '/cv/' : '/en/cv/'} class="btn btn-secondary">{lang === 'es' ? 'Descargar CV' : 'Download CV'}</a>
         <a href={personal.github} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href={personal.linkedin} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>
@@ -27,19 +58,19 @@ const m = meta[lang];
       <svg viewBox="0 0 400 200" class="chart-svg" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.25" />
-            <stop offset="100%" stop-color="var(--accent)" stop-opacity="0" />
+            <stop offset="0%" stop-color="#F2913F" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#F2913F" stop-opacity="0" />
           </linearGradient>
         </defs>
-        <text x="20" y="30" class="chart-label" fill="var(--muted)">Churn by age · proyecto 01</text>
+        <text x="20" y="30" class="chart-label" fill="#9DB0AC">Churn by age · proyecto 01</text>
         <g transform="translate(40, 40)">
           <line x1="0" y1="140" x2="340" y2="140" class="chart-axis" />
           <line x1="0" y1="140" x2="0" y2="0" class="chart-axis" />
-          <text x="0" y="155" class="chart-tick" fill="var(--muted)">18</text>
-          <text x="80" y="155" class="chart-tick" fill="var(--muted)">35</text>
-          <text x="160" y="155" class="chart-tick" fill="var(--muted)">50</text>
-          <text x="240" y="155" class="chart-tick" fill="var(--muted)">65</text>
-          <text x="320" y="155" class="chart-tick" fill="var(--muted)">80</text>
+          <text x="0" y="155" class="chart-tick" fill="#9DB0AC">18</text>
+          <text x="80" y="155" class="chart-tick" fill="#9DB0AC">35</text>
+          <text x="160" y="155" class="chart-tick" fill="#9DB0AC">50</text>
+          <text x="240" y="155" class="chart-tick" fill="#9DB0AC">65</text>
+          <text x="320" y="155" class="chart-tick" fill="#9DB0AC">80</text>
           <path d="M0,120 C40,115 60,100 90,90 S140,75 170,55 S220,10 250,8 S300,30 340,25" class="chart-line" fill="none" />
           <path d="M0,120 C40,115 60,100 90,90 S140,75 170,55 S220,10 250,8 S300,30 340,25 L340,140 L0,140 Z" class="chart-area" fill="url(#chartGradient)" />
         </g>
@@ -48,17 +79,111 @@ const m = meta[lang];
   </div>
 </section>
 
+<script>
+  (function () {
+    const video = document.querySelector('[data-hero-video]') as HTMLVideoElement;
+    const hero = video?.closest('.hero') as HTMLElement;
+    if (!video || !hero) return;
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const conn = navigator.connection as any;
+    const saveData = conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? '');
+
+    if (reduce.matches || saveData) return;
+
+    const w = window.innerWidth;
+    const portrait = matchMedia('(orientation: portrait)').matches;
+    const size = (w <= 700 && portrait) ? 'mobile-540' : (w * devicePixelRatio >= 2400 ? '1920' : '1280');
+
+    video.poster = `/assets/hero/hero-poster-${size}.webp`;
+    for (const [ext, type] of [['webm', 'video/webm; codecs=vp9'], ['mp4', 'video/mp4']]) {
+      const s = document.createElement('source');
+      s.src = `/assets/hero/hero-${size}.${ext}`;
+      s.type = type;
+      video.append(s);
+    }
+    video.hidden = false;
+    video.preload = 'auto';
+    video.addEventListener('playing', () => video.classList.add('is-playing'), { once: true });
+    video.play().catch(() => {});
+
+    new IntersectionObserver(([e]) => e.isIntersecting ? video.play().catch(() => {}) : video.pause()).observe(hero);
+
+    let ticking = false;
+    addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = Math.min(scrollY, hero.offsetHeight);
+        hero.style.setProperty('--hero-shift', (y * 0.3).toFixed(1));
+        ticking = false;
+      });
+    }, { passive: true });
+  })();
+</script>
+
 <style>
   .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+    background: transparent;
     min-height: calc(100vh - 4rem);
     display: flex;
     align-items: center;
     padding: 4rem 0;
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(14, 79, 79, 0.04) 100%);
+    --hero-bg-h: 125vh;
+    /* Hero is always dark, even in light theme */
+    --hero-ink: #E8EFEC;
+    --hero-muted: #9DB0AC;
+    --hero-brand: #3FA7A0;
+    --hero-accent: #F2913F;
+    --hero-accent-text: #F2913F;
+    --hero-chip-border: rgba(157, 176, 172, 0.25);
   }
 
-  [data-theme="dark"] .hero {
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(63, 167, 160, 0.04) 100%);
+  @media (max-width: 700px) {
+    .hero {
+      --hero-bg-h: 112vh;
+    }
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    clip-path: inset(0);
+  }
+
+  .hero-poster,
+  .hero-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--hero-bg-h);
+    object-fit: cover;
+    object-position: 50% 100%;
+    pointer-events: none;
+    transform: translate3d(0, calc(var(--hero-shift, 0) * -1px), 0);
+  }
+
+  .hero-video {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+
+  .hero-video.is-playing {
+    opacity: 1;
+  }
+
+  .hero-fade {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 35vh;
+    z-index: -1;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    pointer-events: none;
   }
 
   .hero-inner {
@@ -69,7 +194,7 @@ const m = meta[lang];
   }
 
   .hero-greeting {
-    color: var(--accent-text);
+    color: var(--hero-accent-text);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.95rem;
     margin: 0 0 0.75rem;
@@ -79,18 +204,19 @@ const m = meta[lang];
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: 700;
     margin: 0 0 0.5rem;
+    color: var(--hero-ink);
   }
 
   .hero-role {
     font-size: clamp(1.25rem, 3vw, 1.75rem);
-    color: var(--muted);
+    color: var(--hero-muted);
     font-weight: 500;
     margin: 0 0 1.5rem;
   }
 
   .hero-tagline {
     font-size: clamp(1rem, 2vw, 1.25rem);
-    color: var(--muted);
+    color: var(--hero-muted);
     max-width: 540px;
     margin: 0 0 2rem;
   }
@@ -99,6 +225,24 @@ const m = meta[lang];
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
+  }
+
+  /* Force dark-button look inside hero regardless of global theme */
+  .hero .btn-primary {
+    background: var(--hero-accent);
+    color: #10201F;
+  }
+
+  .hero .btn-secondary {
+    background: transparent;
+    color: var(--hero-ink);
+    border-color: var(--hero-chip-border);
+  }
+
+  .hero .btn-secondary:hover,
+  .hero .btn-secondary:focus {
+    background: rgba(232, 239, 236, 0.08);
+    border-color: var(--hero-brand);
   }
 
   .hero-chart {
@@ -120,7 +264,7 @@ const m = meta[lang];
   }
 
   .chart-axis {
-    stroke: var(--chip-border);
+    stroke: var(--hero-chip-border);
     stroke-width: 1;
   }
 
@@ -130,7 +274,7 @@ const m = meta[lang];
   }
 
   .chart-line {
-    stroke: var(--accent);
+    stroke: var(--hero-accent);
     stroke-width: 3;
     stroke-linecap: round;
     stroke-dasharray: 600;
@@ -156,6 +300,13 @@ const m = meta[lang];
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .hero-video {
+      display: none;
+    }
+    .hero-poster,
+    .hero-video {
+      transform: none;
+    }
     .chart-line {
       stroke-dashoffset: 0;
       animation: none;
@@ -176,6 +327,12 @@ const m = meta[lang];
     }
     .hero-chart {
       max-width: 360px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .hero-chart {
+      display: none;
     }
   }
 </style>

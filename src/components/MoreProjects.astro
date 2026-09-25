@@ -46,6 +46,12 @@ const categoryList = [...new Set(more.map(p => p.category))];
       ))}
     </div>
 
+    <p class="confidentiality-note">
+      {lang === 'es'
+        ? 'Algunos proyectos profesionales no se publican aquí por confidencialidad de los datos.'
+        : 'Some professional projects are not shown here due to data confidentiality.'}
+    </p>
+
     <div class="preview-pane" aria-hidden="true">
       <img alt="" class="preview-image" />
     </div>
@@ -225,6 +231,14 @@ const categoryList = [...new Set(more.map(p => p.category))];
     width: 100%;
     height: auto;
     display: block;
+  }
+
+  .confidentiality-note {
+    margin: 2rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-style: italic;
+    text-align: center;
   }
 
   @media (max-width: 900px) {

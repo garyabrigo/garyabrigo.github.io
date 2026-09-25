@@ -11,8 +11,19 @@ fs.copyFileSync(sourceJson, destJson);
 console.log('Synced projects.json');
 
 fs.mkdirSync(destAssets, { recursive: true });
-for (const file of fs.readdirSync(sourceAssets)) {
-  if (!file.endsWith('.webp')) continue;
-  fs.copyFileSync(path.join(sourceAssets, file), path.join(destAssets, file));
+
+function syncDir(src, dest) {
+  fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      syncDir(srcPath, destPath);
+    } else if (entry.name.endsWith('.webp') || entry.name.endsWith('.webm') || entry.name.endsWith('.mp4')) {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
 }
+
+syncDir(sourceAssets, destAssets);
 console.log('Synced assets');
