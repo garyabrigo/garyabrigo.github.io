@@ -16,7 +16,7 @@ async function screenshot(name, width, height) {
   const page = await browser.newPage();
   await page.setViewport({ width, height, deviceScaleFactor: 2 });
   await page.goto(BASE_URL, { waitUntil: 'networkidle0' });
-  await new Promise(r => setTimeout(r, 1500)); // let video start
+  await new Promise(r => setTimeout(r, 2600)); // let video start and typing effect finish
   const file = path.join(OUT_DIR, `${name}.png`);
   await page.screenshot({ path: file, fullPage: false });
   console.log(`Saved ${file}`);

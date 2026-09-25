@@ -40,7 +40,9 @@ const { lang } = Astro.props;
   <div class="container hero-inner">
     <div class="hero-content">
       <p class="hero-greeting">{lang === 'es' ? 'Hola, soy' : 'Hi, I’m'}</p>
-      <h1 class="hero-name">Gary Daniel Abrigo</h1>
+      <h1 class="hero-name" aria-label="Gary Abrigo">
+        <span class="terminal-line" data-type-text="Gary Abrigo" aria-hidden="true"></span><span class="terminal-cursor" aria-hidden="true">|</span>
+      </h1>
       <p class="hero-role">{lang === 'es' ? 'Analista de datos · Data Science' : 'Data Analyst · Data Science'}</p>
       <p class="hero-tagline">
         {lang === 'es'
@@ -119,6 +121,31 @@ const { lang } = Astro.props;
         ticking = false;
       });
     }, { passive: true });
+  })();
+
+  // Terminal typing effect for hero name
+  (function () {
+    const el = document.querySelector('[data-type-text]') as HTMLElement;
+    const cursor = document.querySelector('.terminal-cursor') as HTMLElement;
+    if (!el) return;
+    const text = el.getAttribute('data-type-text') || '';
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduce.matches) {
+      el.textContent = text;
+      return;
+    }
+    el.textContent = '';
+    let i = 0;
+    function type() {
+      if (i <= text.length) {
+        el.textContent = text.slice(0, i);
+        i++;
+        setTimeout(type, i === 1 ? 400 : 60 + Math.random() * 80);
+      } else if (cursor) {
+        cursor.classList.add('terminal-cursor-blink');
+      }
+    }
+    setTimeout(type, 600);
   })();
 </script>
 
@@ -205,6 +232,41 @@ const { lang } = Astro.props;
     font-weight: 700;
     margin: 0 0 0.5rem;
     color: var(--hero-ink);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .terminal-line {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .terminal-line::before {
+    content: '>';
+    color: var(--hero-accent-text);
+    margin-right: 0.35em;
+  }
+
+  .terminal-cursor {
+    display: inline-block;
+    color: var(--hero-accent-text);
+    font-weight: 400;
+    margin-left: 0.05em;
+    opacity: 1;
+  }
+
+  .terminal-cursor-blink {
+    animation: cursorBlink 1s step-end infinite;
+  }
+
+  @keyframes cursorBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .terminal-cursor-blink {
+      animation: none;
+      opacity: 1;
+    }
   }
 
   .hero-role {

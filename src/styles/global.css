@@ -65,10 +65,18 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Fraunces', Georgia, serif;
+  font-family: 'Playfair Display', Georgia, serif;
   margin: 0 0 0.5em;
   color: var(--brand);
   line-height: 1.2;
+}
+
+/* Minimise CLS while web fonts load */
+.fonts-loading h1, .fonts-loading h2, .fonts-loading h3,
+.fonts-loading .hero-name, .fonts-loading .logo-mark,
+.fonts-loading .section-title, .fonts-loading .featured-title,
+.fonts-loading .more-title, .fonts-loading .project-title {
+  font-family: Georgia, serif;
 }
 
 .mono {

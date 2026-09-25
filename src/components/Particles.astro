@@ -1,0 +1,162 @@
+---
+---
+
+<canvas class="particles" aria-hidden="true" data-particles></canvas>
+
+<script>
+  (function () {
+    const canvas = document.querySelector('[data-particles]') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+    const conn = navigator.connection as any;
+    const saveData = conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? '');
+
+    if (reduce.matches || saveData) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
+      (!document.documentElement.getAttribute('data-theme') && prefersDark);
+
+    const colors = isDark
+      ? ['#0E4F4F', '#3FA7A0', '#F2913F']
+      : ['#0E4F4F', '#3FA7A0', '#E8741E'];
+
+    let width = 0;
+    let height = 0;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      r: number;
+      color: string;
+      alpha: number;
+    }> = [];
+    let shiftY = 0;
+    let rafId = 0;
+    let visible = true;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      createParticles();
+    }
+
+    function createParticles() {
+      const area = (width * height) / 10000;
+      const count = Math.min(Math.max(Math.floor(area * 0.8), 30), 90);
+      particles = [];
+      for (let i = 0; i < count; i++) {
+        particles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: (Math.random() - 0.5) * 0.25,
+          r: Math.random() * 1.5 + 0.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: Math.random() * 0.4 + 0.2
+        });
+      }
+    }
+
+    function draw() {
+      if (!visible) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+
+        // Parallax: background moves slower than scroll, opposite direction
+        const parallaxY = p.y - shiftY * 0.15;
+
+        if (p.x < 0) p.x = width;
+        if (p.x > width) p.x = 0;
+        if (parallaxY < 0) p.y = height + shiftY * 0.15;
+        if (parallaxY > height) p.y = shiftY * 0.15;
+
+        ctx.beginPath();
+        ctx.arc(p.x, parallaxY, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = p.alpha;
+        ctx.fill();
+      }
+
+      // Connect nearby particles with subtle lines
+      ctx.lineWidth = 0.6;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const a = particles[i];
+          const b = particles[j];
+          const dy = (a.y - shiftY * 0.15) - (b.y - shiftY * 0.15);
+          const dx = a.x - b.x;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y - shiftY * 0.15);
+            ctx.lineTo(b.x, b.y - shiftY * 0.15);
+            ctx.strokeStyle = a.color;
+            ctx.globalAlpha = (1 - dist / 100) * 0.12;
+            ctx.stroke();
+          }
+        }
+      }
+
+      ctx.globalAlpha = 1;
+      rafId = requestAnimationFrame(draw);
+    }
+
+    resize();
+    draw();
+
+    window.addEventListener('resize', resize, { passive: true });
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        shiftY = window.scrollY;
+        ticking = false;
+      });
+    }, { passive: true });
+
+    new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (visible && !rafId) draw();
+      else if (!visible && rafId) {
+        cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    }).observe(canvas);
+  })();
+</script>
+
+<style>
+  .particles {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -3;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .particles {
+      display: none;
+    }
+  }
+</style>
