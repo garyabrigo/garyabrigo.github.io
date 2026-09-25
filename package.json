@@ -13,6 +13,7 @@
     "build": "astro build",
     "postbuild": "node scripts/apply-cv-flag.js",
     "preview": "astro preview",
+    "deploy": "npm run build && node scripts/deploy-gh-pages.js",
     "check:images": "node scripts/check-images.js",
     "astro": "astro"
   },
