@@ -119,11 +119,15 @@ const description = t(project.tagline, lang);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     color: var(--muted);
+    text-decoration: underline;
+    text-decoration-color: var(--chip-border);
+    text-underline-offset: 3px;
   }
 
   .back-link:hover,
   .back-link:focus {
     color: var(--brand);
+    text-decoration-color: currentColor;
   }
 
   .project-header {

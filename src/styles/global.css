@@ -5,9 +5,10 @@
   --muted: #5A6B69;
   --brand: #0E4F4F;
   --accent: #E8741E;
-  --accent-text: #B4500E;
+  --accent-text: #A34509;
   --chip-border: rgba(90, 107, 105, 0.3);
   --shadow: rgba(16, 32, 31, 0.08);
+  --focus-ring: var(--brand);
 }
 
 [data-theme="dark"] {
@@ -20,6 +21,7 @@
   --accent-text: #F2913F;
   --chip-border: rgba(157, 176, 172, 0.25);
   --shadow: rgba(0, 0, 0, 0.25);
+  --focus-ring: var(--accent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,6 +35,7 @@
     --accent-text: #F2913F;
     --chip-border: rgba(157, 176, 172, 0.25);
     --shadow: rgba(0, 0, 0, 0.25);
+    --focus-ring: var(--accent);
   }
 }
 
@@ -93,7 +96,7 @@ a:hover, a:focus {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
 

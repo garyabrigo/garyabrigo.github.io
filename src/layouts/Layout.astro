@@ -55,7 +55,7 @@ const labels = nav[lang];
         <a href={lang === 'es' ? '/' : '/en/'} class="logo" aria-label={lang === 'es' ? 'Inicio' : 'Home'}>
           <span class="logo-mark">Gary <span class="logo-accent">Abrigo</span></span>
         </a>
-        <nav class="main-nav" aria-label={lang === 'es' ? 'Navegación principal' : 'Main navigation'}>
+        <nav class="main-nav" id="site-nav" aria-label={lang === 'es' ? 'Navegación principal' : 'Main navigation'}>
           <ul>
             <li><a href={lang === 'es' ? '/#projects' : '/en/#projects'}>{labels.projects}</a></li>
             <li><a href={lang === 'es' ? '/#about' : '/en/#about'}>{labels.about}</a></li>
@@ -80,6 +80,17 @@ const labels = nav[lang];
               </span>
             </span>
           </button>
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-nav"
+            aria-label={lang === 'es' ? 'Abrir menú' : 'Open menu'}
+          >
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+            <span class="nav-toggle-bar" aria-hidden="true"></span>
+          </button>
         </div>
       </div>
     </header>
@@ -97,6 +108,7 @@ const labels = nav[lang];
         <div class="footer-links">
           <a href={personal.github} target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href={lang === 'es' ? '/cv/' : '/en/cv/'}>{labels.cv}</a>
           <a href={otherPath} lang={otherLang}>{otherLang === 'es' ? 'Español' : 'English'}</a>
         </div>
       </div>
@@ -126,6 +138,48 @@ const labels = nav[lang];
         html.setAttribute('data-theme', next);
         localStorage.setItem('theme', next);
       });
+    </script>
+
+    <script>
+      (function () {
+        const navToggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
+        const nav = document.getElementById('site-nav');
+        if (!navToggle || !nav) return;
+
+        function closeNav(returnFocus = false) {
+          nav.classList.remove('nav-open');
+          navToggle.setAttribute('aria-expanded', 'false');
+          if (returnFocus) navToggle.focus();
+        }
+
+        function openNav() {
+          nav.classList.add('nav-open');
+          navToggle.setAttribute('aria-expanded', 'true');
+          const firstLink = nav.querySelector('a') as HTMLElement | null;
+          firstLink?.focus();
+        }
+
+        navToggle.addEventListener('click', () => {
+          const isOpen = navToggle.getAttribute('aria-expanded') === 'true';
+          if (isOpen) closeNav();
+          else openNav();
+        });
+
+        nav.addEventListener('click', (e) => {
+          if ((e.target as HTMLElement).closest('a')) closeNav();
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && navToggle.getAttribute('aria-expanded') === 'true') {
+            closeNav(true);
+          }
+        });
+
+        const desktopQuery = window.matchMedia('(min-width: 641px)');
+        desktopQuery.addEventListener('change', (e) => {
+          if (e.matches) closeNav();
+        });
+      })();
     </script>
   </body>
 </html>
@@ -291,6 +345,48 @@ const labels = nav[lang];
     }
   }
 
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid var(--chip-border);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .nav-toggle-bar {
+    display: block;
+    width: 16px;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+  }
+
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-toggle-bar {
+      transition: none;
+    }
+  }
+
   .site-footer {
     border-top: 1px solid var(--chip-border);
     padding: 2.5rem 0;
@@ -333,9 +429,45 @@ const labels = nav[lang];
   }
 
   @media (max-width: 640px) {
+    .nav-toggle {
+      display: flex;
+    }
+
     .main-nav {
       display: none;
     }
+
+    .main-nav.nav-open {
+      display: block;
+      position: fixed;
+      top: calc(4rem + 1px);
+      left: 0;
+      right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--chip-border);
+      box-shadow: 0 12px 24px var(--shadow);
+      z-index: 999;
+    }
+
+    .main-nav.nav-open ul {
+      flex-direction: column;
+      gap: 0;
+      padding: 0.5rem 1.5rem 1rem;
+    }
+
+    .main-nav.nav-open li {
+      border-bottom: 1px solid var(--chip-border);
+    }
+
+    .main-nav.nav-open li:last-child {
+      border-bottom: none;
+    }
+
+    .main-nav.nav-open a {
+      display: block;
+      padding: 0.9rem 0;
+    }
+
     .footer-inner {
       flex-direction: column;
       text-align: center;
