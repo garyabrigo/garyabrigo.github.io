@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { getLanguagePath, personal, nav, type Lang } from '../lib/data';
+import { getLanguagePath, personal, nav, siteUrl, type Lang } from '../lib/data';
 
 export interface Props {
   lang: Lang;
@@ -14,8 +14,8 @@ const { lang, title, description, path, ogImage = '/og-image.png' } = Astro.prop
 
 const otherLang = lang === 'es' ? 'en' : 'es';
 const otherPath = getLanguagePath(path, otherLang);
-const canonical = 'https://d4nnABR.github.io' + path;
-const alternate = 'https://d4nnABR.github.io' + otherPath;
+const canonical = siteUrl + path;
+const alternate = siteUrl + otherPath;
 const labels = nav[lang];
 ---
 
@@ -29,13 +29,13 @@ const labels = nav[lang];
     <meta name="author" content={personal.name} />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="es" href={'https://d4nnABR.github.io' + getLanguagePath(path, 'es')} />
-    <link rel="alternate" hreflang="en" href={'https://d4nnABR.github.io' + getLanguagePath(path, 'en')} />
+    <link rel="alternate" hreflang="es" href={siteUrl + getLanguagePath(path, 'es')} />
+    <link rel="alternate" hreflang="en" href={siteUrl + getLanguagePath(path, 'en')} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={'https://d4nnABR.github.io' + ogImage} />
+    <meta property="og:image" content={siteUrl + ogImage} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={lang === 'es' ? 'es_GT' : 'en_US'} />
     <meta name="twitter:card" content="summary_large_image" />

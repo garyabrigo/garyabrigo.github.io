@@ -12,6 +12,7 @@
     "prebuild": "npm run sync",
     "build": "astro build",
     "preview": "astro preview",
+    "check:images": "node scripts/check-images.js",
     "astro": "astro"
   },
   "dependencies": {

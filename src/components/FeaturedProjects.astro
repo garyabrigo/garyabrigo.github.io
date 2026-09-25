@@ -1,5 +1,5 @@
 ---
-import { getFeaturedProjects, t, categories, meta, type Lang, getTools } from '../lib/data';
+import { getFeaturedProjects, t, categories, meta, type Lang, getTools, assetPath } from '../lib/data';
 
 export interface Props {
   lang: Lang;
@@ -24,7 +24,7 @@ const m = meta[lang];
             <div class="featured-image">
               {project.cover ? (
                 <img
-                  src={project.cover}
+                  src={assetPath(project.cover)}
                   alt={`${t(project.title, lang)} — ${t(project.tagline, lang)}`}
                   loading={index === 0 ? 'eager' : 'lazy'}
                   width="800"

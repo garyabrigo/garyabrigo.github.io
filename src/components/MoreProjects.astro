@@ -1,5 +1,5 @@
 ---
-import { getMoreProjects, t, categories, meta, type Lang, getTools } from '../lib/data';
+import { getMoreProjects, t, categories, meta, type Lang, getTools, assetPath } from '../lib/data';
 
 export interface Props {
   lang: Lang;
@@ -36,7 +36,7 @@ const categoryList = [...new Set(more.map(p => p.category))];
           href={`${lang === 'es' ? '/proyectos/' : '/en/projects/'}${project.id}/`}
           class="more-row"
           data-category={project.category}
-          data-cover={project.cover || ''}
+          data-cover={assetPath(project.cover) || ''}
         >
           <span class="more-category">{categories[project.category]?.[lang] || project.category}</span>
           <span class="more-title">{t(project.title, lang)}</span>
@@ -47,7 +47,7 @@ const categoryList = [...new Set(more.map(p => p.category))];
     </div>
 
     <div class="preview-pane" aria-hidden="true">
-      <img src="" alt="" class="preview-image" />
+      <img alt="" class="preview-image" />
     </div>
   </div>
 </section>

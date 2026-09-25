@@ -30,6 +30,7 @@ export interface Project {
   methods: { es: string[]; en: string[] };
   results: { es: string; en: string }[];
   results_status: string;
+  results_note: { es: string; en: string } | null;
   results_source: string | null;
   cover: string | null;
   gallery: string[];
@@ -71,12 +72,7 @@ export function getStatus(status: string): 'verified' | 'partial' | 'pending' | 
 }
 
 export function cleanTool(tool: string): string | null {
-  // User confirmed 2026-09-24 that dashboards are built with Looker Studio.
-  // Keep returning null for any other unconfirmed tool until projects.json is regenerated.
-  if (tool.includes('(por confirmar)')) {
-    if (tool.toLowerCase().includes('looker studio')) return 'Looker Studio';
-    return null;
-  }
+  if (tool.includes('(por confirmar)') || tool.includes('(to be confirmed)')) return null;
   return tool;
 }
 
@@ -88,11 +84,17 @@ export function getResults(project: Project, lang: Lang): { items: string[]; not
   const status = getStatus(project.results_status);
   if (status === 'pending') return { items: [] };
   const items = project.results.map(r => t(r, lang));
+
+  // results_note from projects.json takes precedence (e.g. Sun50 correction).
+  const sourceNote = project.results_note ? t(project.results_note, lang) : null;
   if (status === 'partial') {
-    const note = lang === 'es'
+    const note = sourceNote || (lang === 'es'
       ? 'Resultados completos: próximamente'
-      : 'Full results: coming soon';
+      : 'Full results: coming soon');
     return { items, note };
+  }
+  if (sourceNote) {
+    return { items, note: sourceNote };
   }
   return { items };
 }
@@ -110,27 +112,12 @@ export function getAllTools(): string[] {
   return Array.from(set).sort();
 }
 
-// Confirmed course for all university coursework. Applied as a fallback while
-// t-0003 regenerates projects.json with the final values.
-const CONFIRMED_COURSE = {
-  es: 'Especialización en Data Science y Maestría en IT Management (URL), 2026',
-  en: 'Data Science Specialisation and Master in IT Management (URL), 2026'
-};
-
 export function getCourse(project: Project, lang: Lang): string {
-  const rawCourse = t(project.context.course, lang);
-  if (rawCourse && !rawCourse.toLowerCase().includes('por confirmar') && !rawCourse.toLowerCase().includes('to be confirmed')) {
-    return rawCourse;
-  }
-  return CONFIRMED_COURSE[lang];
+  return t(project.context.course, lang);
 }
 
 export function getTeam(project: Project, lang: Lang): string {
-  const rawTeam = t(project.context.team, lang);
-  if (rawTeam && !rawTeam.toLowerCase().includes('por confirmar') && !rawTeam.toLowerCase().includes('to be confirmed')) {
-    return rawTeam;
-  }
-  return lang === 'es' ? 'URL, 2026' : 'URL, 2026';
+  return t(project.context.team, lang);
 }
 
 export const nav = {
@@ -238,13 +225,22 @@ export const certifications = [
   { name: 'Lean Six Sigma Yellow Belt Certified', issuer: 'Corporación Multi Inversiones', date: '2025' }
 ];
 
+export const owner = projectsData.owner as {
+  github: string;
+  site: string;
+  email: string;
+  email_public: boolean;
+};
+
 export const personal = {
   name: 'Gary Daniel Abrigo Raymundo',
-  email: 'abrigogary@gmail.com',
+  email: owner.email_public ? owner.email : 'abrigogary@gmail.com',
   github: 'https://github.com/d4nnABR',
   linkedin: 'https://www.linkedin.com/in/garyabr/',
   location: 'Guatemala'
 };
+
+export const siteUrl = 'https://garyabrigo.github.io';
 
 export function getLanguagePath(path: string, targetLang: Lang): string {
   const clean = path.replace(/^\/(en\/)?/, '/').replace(/\/$/, '') || '/';
@@ -253,6 +249,13 @@ export function getLanguagePath(path: string, targetLang: Lang): string {
     return '/en' + clean;
   }
   return clean || '/';
+}
+
+// Ensure asset paths are absolute so they work from pages at any depth.
+export function assetPath(src: string | null | undefined): string | null {
+  if (!src) return null;
+  if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('/')) return src;
+  return '/' + src.replace(/^\//, '');
 }
 
 // Pre-build helper: copy assets from the canonical source so rebuilds stay fresh.
