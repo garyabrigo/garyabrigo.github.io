@@ -242,6 +242,12 @@ export const personal = {
 
 export const siteUrl = 'https://garyabrigo.github.io';
 
+// Flag to reactivate the CV page/links once the PDFs are approved.
+// Publishing without a CV yet means CV_ENABLED must stay unset/false;
+// set CV_ENABLED=true (env var) to bring the nav link, footer link,
+// hero button and /cv/ + /en/cv/ pages back into the build.
+export const cvEnabled = process.env.CV_ENABLED === 'true';
+
 export function getLanguagePath(path: string, targetLang: Lang): string {
   const clean = path.replace(/^\/(en\/)?/, '/').replace(/\/$/, '') || '/';
   if (targetLang === 'en') {

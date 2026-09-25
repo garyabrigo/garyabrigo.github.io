@@ -8,11 +8,12 @@ const DIST_DIR = path.resolve('dist');
 const projectsData = JSON.parse(fs.readFileSync('/home/tars/Proyectos/CV/portfolio-spec/projects.json', 'utf-8'));
 const projects = projectsData.projects;
 
+const cvEnabled = process.env.CV_ENABLED === 'true';
+
 const pages = [
   '/',
   '/en/',
-  '/cv/',
-  '/en/cv/',
+  ...(cvEnabled ? ['/cv/', '/en/cv/'] : []),
   ...projects.flatMap(p => [`/proyectos/${p.id}/`, `/en/projects/${p.id}/`])
 ];
 
@@ -86,6 +87,17 @@ for (const pagePath of pages) {
   }
 
   await page.close();
+}
+
+if (!cvEnabled) {
+  for (const cvPath of ['/cv/', '/en/cv/']) {
+    const page = await browser.newPage();
+    const response = await page.goto(`${BASE_URL}${cvPath}`, { waitUntil: 'networkidle0' }).catch(() => null);
+    if (response && response.status() < 400) {
+      failures.push({ page: cvPath, type: 'cv-not-excluded', src: cvPath, detail: `Expected 404 while CV_ENABLED=false, got ${response.status()}` });
+    }
+    await page.close();
+  }
 }
 
 await browser.close();

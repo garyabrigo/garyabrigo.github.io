@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
 import Particles from '../components/Particles.astro';
-import { getLanguagePath, personal, nav, siteUrl, type Lang } from '../lib/data';
+import { getLanguagePath, personal, nav, siteUrl, cvEnabled, type Lang } from '../lib/data';
 
 export interface Props {
   lang: Lang;
@@ -60,7 +60,9 @@ const labels = nav[lang];
             <li><a href={lang === 'es' ? '/#projects' : '/en/#projects'}>{labels.projects}</a></li>
             <li><a href={lang === 'es' ? '/#about' : '/en/#about'}>{labels.about}</a></li>
             <li><a href={lang === 'es' ? '/#contact' : '/en/#contact'}>{labels.contact}</a></li>
-            <li><a href={lang === 'es' ? '/cv/' : '/en/cv/'}>{labels.cv}</a></li>
+            {cvEnabled && (
+              <li><a href={lang === 'es' ? '/cv/' : '/en/cv/'}>{labels.cv}</a></li>
+            )}
           </ul>
         </nav>
         <div class="header-actions">
@@ -108,7 +110,9 @@ const labels = nav[lang];
         <div class="footer-links">
           <a href={personal.github} target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href={personal.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href={lang === 'es' ? '/cv/' : '/en/cv/'}>{labels.cv}</a>
+          {cvEnabled && (
+            <a href={lang === 'es' ? '/cv/' : '/en/cv/'}>{labels.cv}</a>
+          )}
           <a href={otherPath} lang={otherLang}>{otherLang === 'es' ? 'Español' : 'English'}</a>
         </div>
       </div>

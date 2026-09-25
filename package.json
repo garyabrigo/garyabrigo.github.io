@@ -11,6 +11,7 @@
     "dev": "astro dev",
     "prebuild": "npm run sync",
     "build": "astro build",
+    "postbuild": "node scripts/apply-cv-flag.js",
     "preview": "astro preview",
     "check:images": "node scripts/check-images.js",
     "astro": "astro"

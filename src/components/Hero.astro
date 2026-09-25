@@ -1,5 +1,5 @@
 ---
-import { personal, type Lang } from '../lib/data';
+import { personal, cvEnabled, type Lang } from '../lib/data';
 
 export interface Props {
   lang: Lang;
@@ -51,7 +51,9 @@ const { lang } = Astro.props;
       </p>
       <div class="hero-actions">
         <a href="#projects" class="btn btn-primary">{lang === 'es' ? 'Ver proyectos' : 'View projects'}</a>
-        <a href={lang === 'es' ? '/cv/' : '/en/cv/'} class="btn btn-secondary">{lang === 'es' ? 'Descargar CV' : 'Download CV'}</a>
+        {cvEnabled && (
+          <a href={lang === 'es' ? '/cv/' : '/en/cv/'} class="btn btn-secondary">{lang === 'es' ? 'Descargar CV' : 'Download CV'}</a>
+        )}
         <a href={personal.github} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href={personal.linkedin} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
       </div>

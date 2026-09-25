@@ -40,7 +40,7 @@ async function testMobileMenu(browser, path, label) {
     if (state.expanded !== 'true') fail(`${label}: aria-expanded not set to true after opening`);
     if (!state.visible) fail(`${label}: nav not visible after opening`);
     if (state.active !== 'A') fail(`${label}: focus did not move into the nav (got ${state.active})`);
-    const expectedCount = 4; // Proyectos/About, Sobre mi, Contacto, CV
+    const expectedCount = process.env.CV_ENABLED === 'true' ? 4 : 3; // + CV when re-enabled
     if (state.links.length !== expectedCount) fail(`${label}: expected ${expectedCount} nav links, found ${state.links.length} (${state.links.join(', ')})`);
 
     await page.keyboard.press('Escape');
