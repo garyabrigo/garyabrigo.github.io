@@ -1,0 +1,252 @@
+---
+import { getMoreProjects, t, categories, meta, type Lang, getTools } from '../lib/data';
+
+export interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const more = getMoreProjects();
+const m = meta[lang];
+
+const categoryList = [...new Set(more.map(p => p.category))];
+---
+
+<section class="section more-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">02.</span>
+      <h2 class="section-title">{m.moreProjects}</h2>
+    </div>
+
+    <div class="filter-bar" role="group" aria-label={lang === 'es' ? 'Filtrar por categoría' : 'Filter by category'}>
+      <button class="filter-btn active" data-filter="all" type="button">
+        {lang === 'es' ? 'Todos' : 'All'}
+      </button>
+      {categoryList.map(cat => (
+        <button class="filter-btn" data-filter={cat} type="button">
+          {categories[cat]?.[lang] || cat}
+        </button>
+      ))}
+    </div>
+
+    <div class="more-list">
+      {more.map(project => (
+        <a
+          href={`${lang === 'es' ? '/proyectos/' : '/en/projects/'}${project.id}/`}
+          class="more-row"
+          data-category={project.category}
+          data-cover={project.cover || ''}
+        >
+          <span class="more-category">{categories[project.category]?.[lang] || project.category}</span>
+          <span class="more-title">{t(project.title, lang)}</span>
+          <span class="more-tools">{getTools(project).slice(0, 3).join(' · ')}</span>
+          <span class="more-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="preview-pane" aria-hidden="true">
+      <img src="" alt="" class="preview-image" />
+    </div>
+  </div>
+</section>
+
+<script>
+  const section = document.currentScript?.closest('.more-section') as HTMLElement;
+  if (section) {
+    const rows = section.querySelectorAll('.more-row');
+    const preview = section.querySelector('.preview-image') as HTMLImageElement;
+    const pane = section.querySelector('.preview-pane') as HTMLElement;
+    const buttons = section.querySelectorAll('.filter-btn');
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        buttons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        rows.forEach(row => {
+          const cat = row.getAttribute('data-category');
+          if (filter === 'all' || cat === filter) {
+            row.style.display = 'flex';
+          } else {
+            row.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    rows.forEach(row => {
+      row.addEventListener('mouseenter', () => {
+        const cover = row.getAttribute('data-cover');
+        if (cover && preview) {
+          preview.src = cover;
+          preview.alt = '';
+          pane.classList.add('preview-visible');
+        }
+      });
+      row.addEventListener('mouseleave', () => {
+        pane.classList.remove('preview-visible');
+      });
+      row.addEventListener('focus', () => {
+        const cover = row.getAttribute('data-cover');
+        if (cover && preview) {
+          preview.src = cover;
+          pane.classList.add('preview-visible');
+        }
+      });
+      row.addEventListener('blur', () => {
+        pane.classList.remove('preview-visible');
+      });
+    });
+  }
+</script>
+
+<style>
+  .more-section {
+    background: var(--bg);
+    position: relative;
+  }
+
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-btn {
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    border: 1px solid var(--chip-border);
+    background: transparent;
+    color: var(--muted);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .filter-btn:hover,
+  .filter-btn:focus,
+  .filter-btn.active {
+    background: var(--brand);
+    color: var(--bg);
+    border-color: var(--brand);
+  }
+
+  .more-list {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--chip-border);
+  }
+
+  .more-row {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--chip-border);
+    color: var(--ink);
+    text-decoration: none;
+    transition: padding-left 0.2s, background 0.2s;
+  }
+
+  .more-row:hover,
+  .more-row:focus {
+    padding-left: 0.75rem;
+    background: rgba(14, 79, 79, 0.03);
+    text-decoration: none;
+  }
+
+  [data-theme="dark"] .more-row:hover,
+  [data-theme="dark"] .more-row:focus {
+    background: rgba(63, 167, 160, 0.05);
+  }
+
+  .more-category {
+    width: 160px;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-text);
+  }
+
+  .more-title {
+    flex: 1;
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .more-tools {
+    width: 220px;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .more-arrow {
+    color: var(--accent-text);
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .more-row:hover .more-arrow,
+  .more-row:focus .more-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+  }
+
+  .preview-pane {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%) scale(0.95);
+    width: 320px;
+    border-radius: 8px;
+    overflow: hidden;
+    pointer-events: none;
+    opacity: 0;
+    box-shadow: 0 12px 40px var(--shadow);
+    transition: opacity 0.25s, transform 0.25s;
+    z-index: 50;
+  }
+
+  .preview-pane.preview-visible {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+
+  .preview-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media (max-width: 900px) {
+    .preview-pane {
+      display: none;
+    }
+    .more-row {
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .more-category,
+    .more-tools {
+      width: auto;
+      text-align: left;
+    }
+    .more-tools {
+      order: 3;
+      width: 100%;
+    }
+    .more-title {
+      width: 100%;
+      order: 2;
+    }
+  }
+</style>

@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# generated content: synced from /home/tars/Proyectos/CV/portfolio-spec via npm run sync
+src/content/projects.json
+public/assets/

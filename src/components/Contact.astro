@@ -1,0 +1,107 @@
+---
+import { personal, meta, type Lang } from '../lib/data';
+
+export interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const m = meta[lang];
+---
+
+<section id="contact" class="section contact-section">
+  <div class="container contact-inner">
+    <div class="section-header">
+      <span class="section-number">04.</span>
+      <h2 class="section-title">{m.contactTitle}</h2>
+    </div>
+    <p class="contact-text">{m.contactText}</p>
+    <div class="contact-actions">
+      <a href={`mailto:${personal.email}`} class="btn btn-primary contact-email">
+        <span>{personal.email}</span>
+      </a>
+      <button type="button" class="btn btn-secondary copy-email" data-email={personal.email}>
+        {lang === 'es' ? 'Copiar email' : 'Copy email'}
+      </button>
+      <a href={personal.github} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href={personal.linkedin} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+    <p class="copy-feedback" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<script>
+  const section = document.currentScript?.closest('.contact-section') as HTMLElement;
+  if (section) {
+    const copyBtn = section.querySelector('.copy-email') as HTMLButtonElement;
+    const feedback = section.querySelector('.copy-feedback') as HTMLElement;
+    copyBtn?.addEventListener('click', async () => {
+      const email = copyBtn.getAttribute('data-email') || '';
+      try {
+        await navigator.clipboard.writeText(email);
+        feedback.textContent = section.querySelector('.section-title')?.textContent?.includes('Contacto')
+          ? 'Email copiado'
+          : 'Email copied';
+        setTimeout(() => { feedback.textContent = ''; }, 2000);
+      } catch {
+        feedback.textContent = section.querySelector('.section-title')?.textContent?.includes('Contacto')
+          ? 'No se pudo copiar'
+          : 'Could not copy';
+      }
+    });
+  }
+</script>
+
+<style>
+  .contact-section {
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(14, 79, 79, 0.04) 100%);
+    text-align: center;
+  }
+
+  [data-theme="dark"] .contact-section {
+    background: linear-gradient(180deg, var(--bg) 0%, rgba(63, 167, 160, 0.04) 100%);
+  }
+
+  .contact-inner {
+    max-width: 720px;
+  }
+
+  .contact-section .section-header {
+    justify-content: center;
+  }
+
+  .contact-text {
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin: 0 0 2rem;
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .contact-email {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+  }
+
+  .copy-feedback {
+    min-height: 1.5rem;
+    color: var(--accent-text);
+    font-size: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .contact-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .contact-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

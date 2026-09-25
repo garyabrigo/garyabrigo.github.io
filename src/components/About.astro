@@ -1,0 +1,113 @@
+---
+import { meta, education, certifications, type Lang } from '../lib/data';
+
+export interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const m = meta[lang];
+const edu = education[lang];
+---
+
+<section id="about" class="section about-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-number">03.</span>
+      <h2 class="section-title">{m.aboutTitle}</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-bio">
+        <p>{m.aboutText}</p>
+      </div>
+      <div class="about-education">
+        <h3>{m.educationTitle}</h3>
+        <ul class="edu-list">
+          {edu.map(item => (
+            <li>
+              <span class="edu-degree">{item.degree}</span>
+              <span class="edu-school">{item.school}</span>
+              <span class="edu-period">{item.period}</span>
+            </li>
+          ))}
+        </ul>
+        <h3>{m.certificationsTitle}</h3>
+        <ul class="cert-list">
+          {certifications.map(cert => (
+            <li>
+              <span class="cert-name">{cert.name}</span>
+              <span class="cert-meta">{cert.issuer} · {cert.date}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    background: var(--bg);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+  }
+
+  .about-bio {
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--muted);
+  }
+
+  .about-bio p {
+    margin: 0;
+  }
+
+  .about-education h3 {
+    font-size: 1.15rem;
+    margin: 0 0 1rem;
+  }
+
+  .edu-list,
+  .cert-list {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+  }
+
+  .edu-list li,
+  .cert-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--chip-border);
+  }
+
+  .edu-degree,
+  .cert-name {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .edu-school,
+  .cert-meta {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .edu-period {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--accent-text);
+  }
+
+  @media (max-width: 900px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

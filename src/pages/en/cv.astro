@@ -1,0 +1,86 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { meta, personal, type Lang } from '../../lib/data';
+
+const lang: Lang = 'en';
+const m = meta[lang];
+---
+
+<Layout lang={lang} title={`CV · ${personal.name}`} description={m.description} path="/en/cv/">
+  <section class="section cv-section">
+    <div class="container cv-inner">
+      <h1>CV</h1>
+      <p class="cv-lead">
+        {m.contactText}
+      </p>
+
+      <div class="cv-grid">
+        <div class="cv-card">
+          <h2>CV in English</h2>
+          <p class="cv-status">{m.cvComing}</p>
+        </div>
+        <div class="cv-card">
+          <h2>CV en español</h2>
+          <p class="cv-status">{m.cvComing}</p>
+        </div>
+      </div>
+
+      <div class="cv-contact">
+        <p>{m.contactText}</p>
+        <div class="contact-actions">
+          <a href={`mailto:${personal.email}`} class="btn btn-primary">{personal.email}</a>
+          <a href={personal.linkedin} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href={personal.github} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .cv-section {
+    min-height: 70vh;
+  }
+  .cv-inner {
+    max-width: 800px;
+  }
+  .cv-lead {
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+  .cv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .cv-card {
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 8px;
+  }
+  .cv-card h2 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  .cv-status {
+    color: var(--muted);
+    margin: 0;
+  }
+  .cv-contact {
+    text-align: center;
+  }
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 640px) {
+    .cv-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

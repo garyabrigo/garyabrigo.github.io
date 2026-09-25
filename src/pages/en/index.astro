@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/Hero.astro';
+import StackStrip from '../../components/StackStrip.astro';
+import FeaturedProjects from '../../components/FeaturedProjects.astro';
+import MoreProjects from '../../components/MoreProjects.astro';
+import About from '../../components/About.astro';
+import Contact from '../../components/Contact.astro';
+import { meta } from '../../lib/data';
+
+const lang = 'en';
+const m = meta[lang];
+---
+
+<Layout
+  lang={lang}
+  title={m.title}
+  description={m.description}
+  path="/en/"
+>
+  <Hero lang={lang} />
+  <StackStrip lang={lang} />
+  <FeaturedProjects lang={lang} />
+  <MoreProjects lang={lang} />
+  <About lang={lang} />
+  <Contact lang={lang} />
+</Layout>

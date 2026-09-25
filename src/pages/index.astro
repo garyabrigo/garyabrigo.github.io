@@ -1,17 +1,27 @@
 ---
+import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import StackStrip from '../components/StackStrip.astro';
+import FeaturedProjects from '../components/FeaturedProjects.astro';
+import MoreProjects from '../components/MoreProjects.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import { meta } from '../lib/data';
 
+const lang = 'es';
+const m = meta[lang];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  lang={lang}
+  title={m.title}
+  description={m.description}
+  path="/"
+>
+  <Hero lang={lang} />
+  <StackStrip lang={lang} />
+  <FeaturedProjects lang={lang} />
+  <MoreProjects lang={lang} />
+  <About lang={lang} />
+  <Contact lang={lang} />
+</Layout>

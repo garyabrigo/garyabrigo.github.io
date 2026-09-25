@@ -1,0 +1,352 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { projects, getProjectById, t, categories, meta, getTools, getResults, getCourse, getTeam, type Lang, personal } from '../../../lib/data';
+
+export function getStaticPaths() {
+  return projects.map(project => ({
+    params: { id: project.id },
+  }));
+}
+
+const { id } = Astro.params;
+const project = getProjectById(id as string);
+const lang: Lang = 'en';
+const m = meta[lang];
+
+if (!project) {
+  throw new Error(`Project not found: ${id}`);
+}
+
+const results = getResults(project, lang);
+const title = `${t(project.title, lang)} · ${personal.name}`;
+const description = t(project.tagline, lang);
+---
+
+<Layout lang={lang} title={title} description={description} path={`/en/projects/${project.id}/`}>
+  <article class="project-detail">
+    <div class="container">
+      <a href="/en/#projects" class="back-link">← {m.back}</a>
+
+      <header class="project-header">
+        <div class="project-meta">
+          <span class="badge">{t(project.context.type, lang)}</span>
+          <span class="project-course">{getCourse(project, lang)}</span>
+          <span class="project-team">{getTeam(project, lang)}</span>
+        </div>
+        <h1 class="project-title">{t(project.title, lang)}</h1>
+        <p class="project-tagline">{t(project.tagline, lang)}</p>
+      </header>
+
+      <section class="detail-block">
+        <h2>{m.problem}</h2>
+        <p>{t(project.problem, lang)}</p>
+      </section>
+
+      <section class="detail-block">
+        <h2>{m.data}</h2>
+        <p>{t(project.data, lang)}</p>
+        {project.data_source_url && (
+          <p>
+            <a href={project.data_source_url} target="_blank" rel="noopener noreferrer">
+              {lang === 'es' ? 'Fuente de datos' : 'Data source'} →
+            </a>
+          </p>
+        )}
+      </section>
+
+      <section class="detail-block">
+        <h2>{m.methods}</h2>
+        <ul>
+          {project.methods[lang].map(method => (
+            <li>{method}</li>
+          ))}
+        </ul>
+      </section>
+
+      {results.items.length > 0 && (
+        <section class="detail-block results-block">
+          <h2>{m.results}</h2>
+          <ul class="results-list">
+            {results.items.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+          {results.note && <p class="results-note">{results.note}</p>}
+        </section>
+      )}
+
+      {project.gallery.length > 0 && (
+        <section class="detail-block gallery-block">
+          <h2>{m.gallery}</h2>
+          <div class="gallery-grid">
+            {project.gallery.map((img, i) => (
+              <button
+                type="button"
+                class="gallery-thumb"
+                data-src={img}
+                data-alt={`${t(project.title, lang)} — ${i + 1}`}
+                aria-label={`${lang === 'es' ? 'Ampliar imagen' : 'Enlarge image'} ${i + 1}`}
+              >
+                <img
+                  src={img.replace('.webp', '-thumb.webp')}
+                  alt={`${t(project.title, lang)} — ${i + 1}`}
+                  loading="lazy"
+                  width="320"
+                  height="200"
+                />
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <section class="detail-block">
+        <h2>{m.tools}</h2>
+        <div class="tools-list">
+          {getTools(project).map(tool => (
+            <span class="chip">{tool}</span>
+          ))}
+        </div>
+      </section>
+
+      {(project.links.repo || project.links.demo) && (
+        <section class="detail-block">
+          <h2>{m.links}</h2>
+          <div class="links-list">
+            {project.links.repo && (
+              <a href={project.links.repo} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Repository</a>
+            )}
+            {project.links.demo && (
+              <a href={project.links.demo} class="btn btn-secondary" target="_blank" rel="noopener noreferrer">Demo</a>
+            )}
+          </div>
+        </section>
+      )}
+
+      <p class="authorship-note">{t(project.context.authorship_note, lang)}</p>
+    </div>
+  </article>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label={lang === 'es' ? 'Vista ampliada' : 'Enlarged view'}>
+    <button type="button" class="lightbox-close" aria-label={lang === 'es' ? 'Cerrar' : 'Close'}>×</button>
+    <img src="" alt="" class="lightbox-image" />
+  </div>
+
+  <script>
+    const article = document.currentScript?.closest('.project-detail') as HTMLElement;
+    const lightbox = document.querySelector('.lightbox') as HTMLElement;
+    const lightboxImg = lightbox?.querySelector('.lightbox-image') as HTMLImageElement;
+    const closeBtn = lightbox?.querySelector('.lightbox-close') as HTMLButtonElement;
+
+    function open(src: string, alt: string) {
+      if (!lightbox || !lightboxImg) return;
+      lightboxImg.src = src;
+      lightboxImg.alt = alt;
+      lightbox.classList.add('lightbox-open');
+      document.body.style.overflow = 'hidden';
+      closeBtn?.focus();
+    }
+
+    function close() {
+      if (!lightbox) return;
+      lightbox.classList.remove('lightbox-open');
+      document.body.style.overflow = '';
+    }
+
+    article?.querySelectorAll('.gallery-thumb').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const src = btn.getAttribute('data-src') || '';
+        const alt = btn.getAttribute('data-alt') || '';
+        open(src, alt);
+      });
+    });
+
+    closeBtn?.addEventListener('click', close);
+    lightbox?.addEventListener('click', e => {
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') close();
+    });
+  </script>
+</Layout>
+
+<style>
+  .project-detail {
+    padding: 3rem 0 5rem;
+  }
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+
+  .back-link:hover,
+  .back-link:focus {
+    color: var(--brand);
+  }
+
+  .project-header {
+    margin-bottom: 3rem;
+  }
+
+  .project-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .project-course,
+  .project-team {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .project-title {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin: 0 0 0.75rem;
+  }
+
+  .project-tagline {
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .detail-block {
+    margin-bottom: 2.5rem;
+  }
+
+  .detail-block h2 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .detail-block ul {
+    padding-left: 1.25rem;
+    color: var(--muted);
+  }
+
+  .detail-block li {
+    margin-bottom: 0.5rem;
+  }
+
+  .results-list {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .results-list li {
+    background: var(--surface);
+    padding: 1rem 1.25rem;
+    border-radius: 6px;
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .results-note {
+    color: var(--accent-text);
+    font-size: 0.95rem;
+    margin-top: 1rem;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .gallery-thumb {
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: var(--surface);
+  }
+
+  .gallery-thumb img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s;
+  }
+
+  .gallery-thumb:hover img,
+  .gallery-thumb:focus img {
+    transform: scale(1.03);
+  }
+
+  .tools-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .links-list {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .authorship-note {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--chip-border);
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(11, 22, 24, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+
+  .lightbox-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .lightbox-image {
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: 4px;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    border: 1px solid var(--chip-border);
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    .project-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .links-list {
+      flex-direction: column;
+    }
+  }
+</style>

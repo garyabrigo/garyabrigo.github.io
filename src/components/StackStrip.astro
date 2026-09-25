@@ -1,0 +1,52 @@
+---
+import { getAllTools, meta, type Lang } from '../lib/data';
+
+export interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const tools = getAllTools();
+---
+
+<section class="stack-strip" aria-label={meta[lang].stack}>
+  <div class="container">
+    <div class="stack-scroll">
+      {tools.map(tool => (
+        <span class="chip">{tool}</span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack-strip {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--chip-border);
+    border-bottom: 1px solid var(--chip-border);
+    background: var(--bg);
+  }
+
+  .stack-scroll {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 640px) {
+    .stack-scroll {
+      justify-content: flex-start;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      padding-bottom: 0.5rem;
+      scrollbar-width: none;
+    }
+    .stack-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .chip {
+      white-space: nowrap;
+    }
+  }
+</style>
