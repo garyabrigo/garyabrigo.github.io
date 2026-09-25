@@ -1,0 +1,1491 @@
+{
+  "schema_version": 1,
+  "generated": "2026-09-24",
+  "owner": {
+    "github": "d4nnABR",
+    "site": "https://d4nnABR.github.io"
+  },
+  "languages": [
+    "es",
+    "en"
+  ],
+  "rules": {
+    "es": "Solo hechos del material. Proyectos con results vacío o results_status distinto de «verificado…» no deben mostrar métricas hasta que el usuario las confirme. featured=false: mostrar en «Más proyectos» o no mostrar.",
+    "en": "Facts from the source material only. Projects with empty results or a results_status other than «verificado…» must not show metrics until the user confirms them. featured=false: show under «More projects» or hide."
+  },
+  "categories": {
+    "dashboard": {
+      "es": "Tableros y storytelling",
+      "en": "Dashboards & storytelling"
+    },
+    "analytics-ml": {
+      "es": "Analítica + modelo",
+      "en": "Analytics + model"
+    },
+    "machine-learning": {
+      "es": "Machine Learning",
+      "en": "Machine Learning"
+    },
+    "deep-learning": {
+      "es": "Deep Learning",
+      "en": "Deep Learning"
+    },
+    "data-engineering": {
+      "es": "Ingeniería de datos",
+      "en": "Data engineering"
+    },
+    "labs": {
+      "es": "Laboratorios",
+      "en": "Labs"
+    }
+  },
+  "projects": [
+    {
+      "id": "bank-customer-churn",
+      "order": 1,
+      "featured": true,
+      "category": "dashboard",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "team": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Análisis de fuga de clientes bancarios",
+        "en": "Bank customer churn analysis"
+      },
+      "tagline": {
+        "es": "Dónde se concentra el riesgo de abandono y qué lo explica",
+        "en": "Where churn risk concentrates and what explains it"
+      },
+      "problem": {
+        "es": "Identificar qué perfiles de cliente concentran la fuga (churn) de un banco con clientes en Alemania, España y Francia.",
+        "en": "Identify which customer profiles concentrate churn at a bank with customers in Germany, Spain and France."
+      },
+      "data": {
+        "es": "Base de clientes bancarios por país, género, edad, actividad, número de productos, salario estimado y saldo.",
+        "en": "Bank customer records by country, gender, age, activity, number of products, estimated salary and balance."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Looker Studio (por confirmar)"
+      ],
+      "methods": {
+        "es": [
+          "Tasas de churn por segmento",
+          "Análisis por país × género",
+          "Curva de churn por edad",
+          "Segmentación por saldo y salario",
+          "Storytelling con titulares de hallazgo"
+        ],
+        "en": [
+          "Churn rate by segment",
+          "Country × gender breakdown",
+          "Churn curve by age",
+          "Balance and salary bands",
+          "Insight-led headlines (data storytelling)"
+        ]
+      },
+      "results": [
+        {
+          "es": "Alemania: 32.44 % de churn, el doble que Francia (16.15 %) y España (16.67 %).",
+          "en": "Germany: 32.44% churn, twice France (16.15%) and Spain (16.67%)."
+        },
+        {
+          "es": "Las mujeres fugan entre 8 y 10 puntos más que los hombres en los tres países.",
+          "en": "Women churn 8–10 points more than men in all three countries."
+        },
+        {
+          "es": "El riesgo se concentra entre 40 y 60 años; supera el 50 % entre 50 y 60 años.",
+          "en": "Risk peaks between ages 40 and 60, above 50% for ages 50–60."
+        },
+        {
+          "es": "Clientes inactivos: ~27 % de fuga frente a ~14 % de los activos.",
+          "en": "Inactive customers: ~27% churn vs ~14% for active ones."
+        },
+        {
+          "es": "Con 2 productos la fuga es la más baja (7.58 %); desde 3 productos se dispara.",
+          "en": "Customers with 2 products churn the least (7.58%); 3+ products spikes churn."
+        },
+        {
+          "es": "El salario no explica la fuga (~20 % en todos los tramos); el saldo sí: 35 % en saldos de 0 a 50 mil.",
+          "en": "Salary does not explain churn (~20% across bands); balance does: 35% for balances of 0–50k."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "docs/Bank_Customer_Churn_Prediction.pdf",
+      "cover": "assets/bank-3.webp",
+      "gallery": [
+        "assets/bank-3.webp",
+        "assets/bank-1.webp",
+        "assets/bank-2.webp"
+      ],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "01-bank-customer-churn",
+        "files": {
+          "pdf": "docs/Bank_Customer_Churn_Prediction.pdf"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "¿Con qué herramienta se hizo el tablero? (parece Looker Studio; confirmar)",
+        "¿De qué curso y fecha es? ¿Fue individual o en grupo?",
+        "El archivo se llama «Prediction», pero el material solo muestra análisis descriptivo: ¿hubo un modelo predictivo? Si lo hubo, ¿dónde está y qué métrica obtuvo?",
+        "¿Origen del dataset (p. ej. Kaggle)? Enlace si lo hay."
+      ]
+    },
+    {
+      "id": "employee-attrition",
+      "order": 2,
+      "featured": true,
+      "category": "analytics-ml",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Storytelling with Data",
+          "en": "Storytelling with Data"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Factores de riesgo de fuga de empleados",
+        "en": "Employee attrition risk factors"
+      },
+      "tagline": {
+        "es": "Tablero de hallazgos + árbol de decisión para priorizar la retención",
+        "en": "Insight dashboard + decision tree to prioritise retention"
+      },
+      "problem": {
+        "es": "Entender qué factores (educación, cercanía a la oficina, salario, satisfacción, género, departamento) se asocian a la renuncia de empleados y proponer acciones de retención.",
+        "en": "Understand which factors (education, distance to office, salary, satisfaction, gender, department) are associated with employee resignation and propose retention actions."
+      },
+      "data": {
+        "es": "100 empleados (18 renuncias) en «Employee Data (1).xlsx».",
+        "en": "100 employees (18 resignations) in «Employee Data (1).xlsx»."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Python",
+        "pandas",
+        "scikit-learn",
+        "Databricks",
+        "Looker Studio (por confirmar)"
+      ],
+      "methods": {
+        "es": [
+          "Tasa de fuga por categoría y ranking estadístico (chi²)",
+          "Árbol de decisión con One-Hot Encoding, matriz de confusión y validación cruzada",
+          "Modelo simplificado a 2 variables comparado con un modelo base (DummyClassifier)",
+          "Tablero con cruces salario × satisfacción y departamento × género"
+        ],
+        "en": [
+          "Attrition rate by category and statistical ranking (chi²)",
+          "Decision tree with one-hot encoding, confusion matrix and cross-validation",
+          "Simplified 2-variable tree compared to a baseline (DummyClassifier)",
+          "Dashboard with salary × satisfaction and department × gender cross-tabs"
+        ]
+      },
+      "results": [
+        {
+          "es": "Tasa de fuga general: 18 % (n = 100).",
+          "en": "Overall attrition: 18% (n = 100)."
+        },
+        {
+          "es": "Salario bajo + satisfacción baja: 75 % de fuga (n = 4, señal de alerta); salario alto + satisfacción alta: 0 % (n = 18).",
+          "en": "Low salary + low satisfaction: 75% attrition (n = 4, warning signal); high salary + high satisfaction: 0% (n = 18)."
+        },
+        {
+          "es": "Satisfacción baja: 28.57 % de fuga frente a 15.63 % (media) y 14.89 % (alta).",
+          "en": "Low satisfaction: 28.57% attrition vs 15.63% (medium) and 14.89% (high)."
+        },
+        {
+          "es": "La cercanía no explica la fuga: Cerca 19.4 % (n = 67) vs Lejos 15.2 % (n = 33).",
+          "en": "Distance does not explain attrition: Near 19.4% (n = 67) vs Far 15.2% (n = 33)."
+        },
+        {
+          "es": "Hombres en Ventas: 27.8 % (n = 18), el pico del cruce departamento × género.",
+          "en": "Men in Sales: 27.8% (n = 18), the highest department × gender cell."
+        },
+        {
+          "es": "El árbol simplificado identifica satisfacción y nivel salarial como principales criterios; en la prueba inicial detectó todas las renuncias, con muchas falsas alertas. Con 100 casos se presenta como herramienta exploratoria, no predictiva.",
+          "en": "The simplified tree identifies satisfaction and salary level as the main criteria; in the initial test it caught every resignation, with many false alarms. With 100 records it is framed as exploratory, not predictive."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "docs/Informe_sin_título.pdf; legible/Laboratorio 2.md (conclusiones)",
+      "cover": "assets/attrition-1.webp",
+      "gallery": [
+        "assets/attrition-1.webp",
+        "assets/attrition-2.webp"
+      ],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "02-employee-attrition",
+        "files": {
+          "pdf": "docs/Informe_sin_título.pdf",
+          "notebook": "notebooks/Laboratorio 2.py",
+          "readable": "legible/Laboratorio 2.md"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "Confirmar que el tablero «Informe sin título» y el notebook «Laboratorio 2» (Storytelling with Data) son el mismo proyecto de fuga de empleados.",
+        "¿Herramienta del tablero? (parece Looker Studio)",
+        "¿Qué nombre quieres darle? «Informe sin título» no sirve como título público."
+      ]
+    },
+    {
+      "id": "retailco-sales",
+      "order": 3,
+      "featured": true,
+      "category": "dashboard",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "team": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Resumen ejecutivo de ventas — RetailCo",
+        "en": "Executive sales summary — RetailCo"
+      },
+      "tagline": {
+        "es": "Crecimiento interanual por segmento, categoría y región con selector de año",
+        "en": "Year-over-year growth by segment, category and region with a year selector"
+      },
+      "problem": {
+        "es": "Dar a la gerencia una vista ejecutiva del crecimiento de ventas frente al año anterior.",
+        "en": "Give management an executive view of sales growth versus the previous year."
+      },
+      "data": {
+        "es": "4 años de historia de ventas por segmento, categoría, región y estado.",
+        "en": "4 years of sales history by segment, category, region and state."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Looker Studio (por confirmar)"
+      ],
+      "methods": {
+        "es": [
+          "KPI de ventas acumuladas",
+          "Crecimiento YoY calculado automáticamente según el año elegido",
+          "Comparativo mensual año actual vs anterior con línea de tendencia",
+          "Mapa de burbujas por estado"
+        ],
+        "en": [
+          "Cumulative sales KPI",
+          "YoY growth computed automatically for the selected year",
+          "Monthly current vs previous year with trend line",
+          "Bubble map by state"
+        ]
+      },
+      "results": [
+        {
+          "es": "Ventas acumuladas del año analizado (2018): 722.1 mil.",
+          "en": "Cumulative sales for the analysed year (2018): 722.1K."
+        },
+        {
+          "es": "Crecimiento YoY por segmento: Home Office 51.24 %, Corporate 15.16 %, Consumer 12.87 %.",
+          "en": "YoY growth by segment: Home Office 51.24%, Corporate 15.16%, Consumer 12.87%."
+        },
+        {
+          "es": "Crecimiento YoY por categoría: Office Supplies 31.77 %, Technology 21.36 %, Furniture 8.43 %.",
+          "en": "YoY growth by category: Office Supplies 31.77%, Technology 21.36%, Furniture 8.43%."
+        },
+        {
+          "es": "Selector de año: los gráficos calculan solos el año anterior.",
+          "en": "Year selector: charts compute the previous year automatically."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "docs/RetailCo.pdf",
+      "cover": "assets/retail-1.webp",
+      "gallery": [
+        "assets/retail-1.webp"
+      ],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "03-retailco-sales-dashboard",
+        "files": {
+          "pdf": "docs/RetailCo.pdf"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "¿Herramienta, curso, fecha y si fue en grupo?",
+        "¿Origen del dataset? (la estructura segmento/categoría/región parece la de «Superstore»; confirmar)"
+      ]
+    },
+    {
+      "id": "garmentpro-productivity",
+      "order": 4,
+      "featured": true,
+      "category": "dashboard",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "team": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Panorama de productividad — GarmentPro Industries",
+        "en": "Productivity overview — GarmentPro Industries"
+      },
+      "tagline": {
+        "es": "Productividad real vs meta por departamento, equipo y trimestre, con diseño de atención visual",
+        "en": "Actual vs target productivity by department, team and quarter, designed for visual attention"
+      },
+      "problem": {
+        "es": "Comparar la productividad real contra la meta y detectar qué variables operativas (horas extra, tiempo improductivo, cambios de estilo, incentivos) se asocian a menor desempeño.",
+        "en": "Compare actual vs target productivity and find which operational variables (overtime, idle time, style changes, incentives) are associated with lower performance."
+      },
+      "data": {
+        "es": "Registros de productividad de equipos de los departamentos sewing y finishing (12 equipos cada uno), con horas extra, tiempo improductivo, cambios de estilo e incentivos.",
+        "en": "Team productivity records for the sewing and finishing departments (12 teams each), with overtime, idle time, style changes and incentives."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Looker Studio (por confirmar)"
+      ],
+      "methods": {
+        "es": [
+          "KPIs vs meta",
+          "Mapa de calor departamento × trimestre",
+          "Serie de un equipo destacado frente al resto en gris",
+          "Dispersión y barras para relacionar variables",
+          "Uso deliberado de color y saturación para dirigir la atención"
+        ],
+        "en": [
+          "KPIs vs target",
+          "Department × quarter heatmap",
+          "One highlighted team against greyed-out peers",
+          "Scatter and bar charts relating variables",
+          "Deliberate use of colour and saturation to guide attention"
+        ]
+      },
+      "results": [
+        {
+          "es": "Productividad promedio 0.74 frente a una meta de 0.73.",
+          "en": "Average productivity 0.74 vs a 0.73 target."
+        },
+        {
+          "es": "Finishing supera su meta (0.75 vs 0.74); Sewing la iguala (0.72).",
+          "en": "Finishing beats its target (0.75 vs 0.74); Sewing matches it (0.72)."
+        },
+        {
+          "es": "Sin tiempo improductivo la productividad promedio va de 62.5 % a 75.2 %; con tiempo improductivo baja a 43.6 %–52.9 %.",
+          "en": "Without idle time average productivity ranges 62.5%–75.2%; with idle time it drops to 43.6%–52.9%."
+        },
+        {
+          "es": "Sewing usa mucha más hora extra sin mejorar su productividad en proporción.",
+          "en": "Sewing uses far more overtime without a proportional productivity gain."
+        },
+        {
+          "es": "Se señalan como posibles cuellos de botella registros con 150 y 300 minutos improductivos y ~35 %–37 % de productividad.",
+          "en": "Records with 150 and 300 idle minutes and ~35%–37% productivity are flagged as possible bottlenecks."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "docs/Laboratorio_5.pdf",
+      "cover": "assets/garment-1.webp",
+      "gallery": [
+        "assets/garment-1.webp",
+        "assets/garment-2.webp",
+        "assets/garment-3.webp"
+      ],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "04-garmentpro-productivity-dashboard",
+        "files": {
+          "pdf": "docs/Laboratorio_5.pdf"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "¿Herramienta, curso («Laboratorio 5» de qué curso), fecha y si fue en grupo?",
+        "¿Origen del dataset? (las columnas coinciden con «Productivity Prediction of Garment Employees» de UCI; confirmar)"
+      ]
+    },
+    {
+      "id": "adventure-works-sales",
+      "order": 5,
+      "featured": false,
+      "category": "dashboard",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "team": {
+          "es": "(por confirmar)",
+          "en": "(to be confirmed)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Comportamiento de ventas — Adventure Works",
+        "en": "Sales behaviour — Adventure Works"
+      },
+      "tagline": {
+        "es": "Tendencia trimestral, marcas, regiones, tiendas y clientes clave",
+        "en": "Quarterly trend, brands, regions, stores and key customers"
+      },
+      "problem": {
+        "es": "Resumir el desempeño comercial para orientar fidelización y expansión.",
+        "en": "Summarise commercial performance to guide loyalty and expansion decisions."
+      },
+      "data": {
+        "es": "Base de ventas Adventure Works 1997–1998 (ventas y margen por marca, región, tienda y cliente).",
+        "en": "Adventure Works sales data 1997–1998 (sales and margin by brand, region, store and customer)."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Looker Studio (por confirmar)"
+      ],
+      "methods": {
+        "es": [
+          "Tendencia trimestral de ventas y margen",
+          "Rankings con filtros por marca, región y tienda",
+          "Matriz región × marca"
+        ],
+        "en": [
+          "Quarterly sales and margin trend",
+          "Rankings with brand, region and store filters",
+          "Region × brand matrix"
+        ]
+      },
+      "results": [
+        {
+          "es": "Ventas de 326.38 mil en T4 1998, el trimestre más alto del periodo.",
+          "en": "Sales of 326.38K in Q4 1998, the highest quarter of the period."
+        },
+        {
+          "es": "North West concentra las ventas (847.8 mil) frente a 330.4 mil de Mexico Central.",
+          "en": "North West concentrates sales (847.8K) vs 330.4K for Mexico Central."
+        },
+        {
+          "es": "Hermanos y Tell Tale lideran ventas y margen por marca.",
+          "en": "Hermanos and Tell Tale lead sales and margin by brand."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "docs/1pag_adventure_works_tablero.png … 3pag",
+      "cover": "assets/adventure-1.webp",
+      "gallery": [
+        "assets/adventure-1.webp",
+        "assets/adventure-3.webp"
+      ],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "05-adventure-works-sales-dashboard",
+        "files": {
+          "images": [
+            "docs/1pag_adventure_works_tablero.png",
+            "docs/2pag_adventure_works_tablero.png",
+            "docs/3pag_adventure_works_tablero.png"
+          ]
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "Las páginas 2 y 3 dicen «Grupo 11» y el zip es «Grupo 13»: ¿es otro grupo/curso? ¿cuál fue tu parte?",
+        "¿Herramienta y curso?"
+      ]
+    },
+    {
+      "id": "bike-sales-sun50",
+      "order": 6,
+      "featured": true,
+      "category": "analytics-ml",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Proyecto integrador «Sun50» (Databricks)",
+          "en": "«Sun50» capstone project (Databricks)"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Ventas globales de bicicletas 2013–2023 en Databricks",
+        "en": "Global bike sales 2013–2023 on Databricks"
+      },
+      "tagline": {
+        "es": "Proyecto integrador de punta a punta: exploración con PySpark, hipótesis de negocio y regresión",
+        "en": "End-to-end capstone: PySpark exploration, business hypotheses and regression"
+      },
+      "problem": {
+        "es": "Recorrer un proyecto completo de ciencia de datos («50 pasos») sobre ventas de bicicletas: plantear hipótesis de negocio, preparar los datos y predecir la cantidad por orden (Order_Quantity).",
+        "en": "Run a full data science project («50 steps») on bike sales: frame business hypotheses, prepare the data and predict quantity per order (Order_Quantity)."
+      },
+      "data": {
+        "es": "Global Bike Sales Dataset 2013–2023 (Kaggle): costos, precios, ingresos, envío, edad, sexo y país de clientes. Tablas en workspace.default (bike_sales_order, bike_sales_complete).",
+        "en": "Global Bike Sales Dataset 2013–2023 (Kaggle): costs, prices, revenue, shipping, customer age, gender and country. Tables in workspace.default (bike_sales_order, bike_sales_complete)."
+      },
+      "data_source_url": "https://www.kaggle.com/datasets/hamedahmadinia/global-bike-sales-dataset-2013-2023",
+      "tools": [
+        "Databricks",
+        "PySpark",
+        "Spark ML",
+        "Python",
+        "scikit-learn"
+      ],
+      "methods": {
+        "es": [
+          "Exploración con Spark DataFrames y visualizaciones de Databricks",
+          "3 hipótesis de negocio (ingresos por región, unidades por orden, ingreso por grupo de edad)",
+          "Exclusión de Profit/Cost/Revenue por fuga de información",
+          "Regresión lineal evaluada con R², MAE y RMSE (el notebook usa Spark ML y scikit-learn)",
+          "Análisis de residuos y severidad del error por percentiles",
+          "Enriquecimiento con Product, Sub_Category y Unit_Price + Random Forest",
+          "K-means (ejercicio del curso)"
+        ],
+        "en": [
+          "Exploration with Spark DataFrames and Databricks visualisations",
+          "3 business hypotheses (revenue by region, units per order, revenue by age group)",
+          "Excluded Profit/Cost/Revenue to avoid target leakage",
+          "Linear regression evaluated with R², MAE and RMSE (the notebook uses Spark ML and scikit-learn)",
+          "Residual analysis and error severity by percentiles",
+          "Enrichment with Product, Sub_Category and Unit_Price + Random Forest",
+          "K-means (course exercise)"
+        ]
+      },
+      "results": [
+        {
+          "es": "Regresión lineal sobre Order_Quantity: MAE 5.9154, RMSE 7.6347, R² 0.3594.",
+          "en": "Linear regression on Order_Quantity: MAE 5.9154, RMSE 7.6347, R² 0.3594."
+        },
+        {
+          "es": "El 50 % de las predicciones tiene un error ≤ 2.05 unidades y el 90 % ≤ 6.14 unidades.",
+          "en": "50% of predictions are within 2.05 units and 90% within 6.14 units."
+        },
+        {
+          "es": "Leve tendencia a sobreestimar: error medio −0.6058 (25,125 sobreestimaciones vs 20,034 subestimaciones).",
+          "en": "Slight over-estimation bias: mean error −0.6058 (25,125 over- vs 20,034 under-estimates)."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "legible/Sun50.md (secciones 34–36)",
+      "cover": "assets/sun50-revenue-country.webp",
+      "gallery": [
+        "assets/sun50-revenue-country.webp",
+        "assets/sun50-quantity-by-year.webp",
+        "assets/sun50-revenue-age.webp",
+        "assets/sun50-profit-month.webp"
+      ],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "06-bike-sales-sun50-databricks",
+        "files": {
+          "notebook": "notebooks/Sun50.py",
+          "readable": "legible/Sun50.md"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "Sección 35 dice que el R² baja de 0.9728 (train) a 0.8083 (test), pero la 34 reporta R² 0.3594: ¿el 0.8083 es del Random Forest enriquecido? Necesito confirmarlo antes de publicar cualquiera de las dos cifras.",
+        "¿Resultado final del Random Forest (métricas)?",
+        "El notebook dice «se cargó una presentación adicional»: ¿puedes compartirla? Tendría el impacto financiero (pasos 42–45).",
+        "¿Curso y fecha? (las capturas son de marzo 2026 por su nombre de archivo)"
+      ]
+    },
+    {
+      "id": "on-time-delivery-ml",
+      "order": 7,
+      "featured": true,
+      "category": "machine-learning",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Machine Learning — Proyecto final",
+          "en": "Machine Learning — Final project"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Predicción de entregas a tiempo en e-commerce",
+        "en": "Predicting on-time delivery in e-commerce"
+      },
+      "tagline": {
+        "es": "Random Forest, regresión logística y K-Means para anticipar atrasos",
+        "en": "Random Forest, logistic regression and K-Means to anticipate delays"
+      },
+      "problem": {
+        "es": "Clasificar si un pedido llega a tiempo y encontrar qué factores y segmentos concentran los atrasos.",
+        "en": "Classify whether an order arrives on time and find which factors and segments concentrate delays."
+      },
+      "data": {
+        "es": "Train.csv: 10,999 pedidos con bodega, modo de envío, llamadas a servicio, calificación, costo, compras previas, importancia, género, descuento y peso; objetivo Reached.on.Time_Y.N.",
+        "en": "Train.csv: 10,999 orders with warehouse, shipment mode, customer-care calls, rating, cost, prior purchases, importance, gender, discount and weight; target Reached.on.Time_Y.N."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Python",
+        "pandas",
+        "scikit-learn",
+        "matplotlib",
+        "seaborn",
+        "Databricks"
+      ],
+      "methods": {
+        "es": [
+          "EDA con gráficos",
+          "Codificación (LabelEncoder) y escalado",
+          "Random Forest y regresión logística",
+          "K-Means con selección de K por silhouette",
+          "Lectura de negocio de coeficientes e importancia de variables"
+        ],
+        "en": [
+          "EDA with charts",
+          "Encoding (LabelEncoder) and scaling",
+          "Random Forest and logistic regression",
+          "K-Means with K chosen by silhouette",
+          "Business reading of coefficients and feature importance"
+        ]
+      },
+      "results": [
+        {
+          "es": "Random Forest: accuracy ≈ 65.73 %, con mejor recall en pedidos atrasados; regresión logística: 64.73 %.",
+          "en": "Random Forest: ≈65.73% accuracy, with better recall on late orders; logistic regression: 64.73%."
+        },
+        {
+          "es": "Variables más importantes: peso (Weight_in_gms), descuento ofrecido y costo del producto.",
+          "en": "Most important features: weight (Weight_in_gms), discount offered and product cost."
+        },
+        {
+          "es": "K-Means (3 grupos): el Cluster 0 tiene 99.47 % de pedidos no entregados a tiempo; se caracteriza por descuentos altos y menor peso promedio.",
+          "en": "K-Means (3 clusters): Cluster 0 has 99.47% late orders; it is characterised by high discounts and lower average weight."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "legible/Proyecto Final Grupo 13.md (Conclusiones)",
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "07-on-time-delivery-ml",
+        "files": {
+          "notebook": "notebooks/Proyecto Final Grupo 13.py",
+          "readable": "legible/Proyecto Final Grupo 13.md",
+          "data": "data/Train.csv"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "¿Origen del dataset? (columnas iguales a «E-Commerce Shipping Data» de Kaggle; confirmar)",
+        "¿Tienes capturas de los gráficos (matriz de confusión, importancia, clusters)? El export no trae salidas."
+      ]
+    },
+    {
+      "id": "chest-xray-pneumonia",
+      "order": 8,
+      "featured": true,
+      "category": "deep-learning",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Deep Learning — Proyecto final",
+          "en": "Deep Learning — Final project"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Clasificación de neumonía en radiografías de tórax",
+        "en": "Pneumonia classification on chest X-rays"
+      },
+      "tagline": {
+        "es": "De una red densa a transfer learning con MobileNetV2 y datos sintéticos con GAN, con evaluación única en test",
+        "en": "From a dense network to MobileNetV2 transfer learning and GAN-generated data, with a single held-out test evaluation"
+      },
+      "problem": {
+        "es": "Clasificar radiografías como normales o con neumonía comparando, de forma controlada, las técnicas vistas en el curso.",
+        "en": "Classify X-rays as normal or pneumonia, comparing the course's techniques in a controlled way."
+      },
+      "data": {
+        "es": "Chest X-Ray Images (Pneumonia), Kaggle (paultimothymooney/chest-xray-pneumonia), descargado con kagglehub.",
+        "en": "Chest X-Ray Images (Pneumonia), Kaggle (paultimothymooney/chest-xray-pneumonia), downloaded with kagglehub."
+      },
+      "data_source_url": "https://www.kaggle.com/datasets/paultimothymooney/chest-xray-pneumonia",
+      "tools": [
+        "Python",
+        "TensorFlow / Keras",
+        "scikit-learn",
+        "Databricks",
+        "kagglehub"
+      ],
+      "methods": {
+        "es": [
+          "Manifiesto y auditoría de imágenes (dimensiones, corruptas, hashes)",
+          "Eliminación de duplicados y protección del conjunto de test",
+          "Pesos de clase",
+          "Red densa, CNN, optimizadores, regularización y normalización",
+          "Transfer learning con MobileNetV2 (fine-tuning de las últimas 30 capas)",
+          "GAN para generar radiografías normales y comparación controlada",
+          "Selección por ROC-AUC de validación y umbral por índice de Youden"
+        ],
+        "en": [
+          "Image manifest and audit (dimensions, corrupt files, hashes)",
+          "Duplicate removal and test-set protection",
+          "Class weights",
+          "Dense net, CNN, optimisers, regularisation and normalisation",
+          "Transfer learning with MobileNetV2 (fine-tuning the last 30 layers)",
+          "GAN to generate normal X-rays and a controlled comparison",
+          "Model selection by validation ROC-AUC and threshold by Youden's index"
+        ]
+      },
+      "results": [],
+      "results_status": "pendiente — sin salidas en el export de Databricks",
+      "results_source": null,
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "08-chest-xray-pneumonia-dl",
+        "files": {
+          "notebook": "notebooks/Proyecto_Final_Chest_XRay.py",
+          "readable": "legible/Proyecto_Final_Chest_XRay.md",
+          "previous_version": "notebooks/Proyecto Final - Chest X-Ray.py"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "Métricas finales en test (ROC-AUC, sensibilidad, especificidad, accuracy) y qué modelo ganó: el export no trae salidas.",
+        "¿Capturas de curvas, matriz de confusión o imágenes generadas por la GAN?"
+      ]
+    },
+    {
+      "id": "ecg-rnn-lstm",
+      "order": 9,
+      "featured": true,
+      "category": "deep-learning",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Deep Learning — Proyecto final",
+          "en": "Deep Learning — Final project"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Detección de ECG anormal con RNN y LSTM",
+        "en": "Abnormal ECG detection with RNN and LSTM"
+      },
+      "tagline": {
+        "es": "Comparación controlada Conv1D–SimpleRNN vs Conv1D–LSTM con partición por registro y MLflow",
+        "en": "Controlled Conv1D–SimpleRNN vs Conv1D–LSTM comparison with record-level splits and MLflow"
+      },
+      "problem": {
+        "es": "Distinguir ritmo sinusal normal de ECG anormal (16 categorías agrupadas) evitando fugas de información entre registros.",
+        "en": "Distinguish normal sinus rhythm from abnormal ECG (16 grouped categories) while avoiding leakage across records."
+      },
+      "data": {
+        "es": "ECG signals (1000 fragments), Kaggle: 1,000 fragmentos de 10 s, 17 clases, 45 registros MIT-BIH.",
+        "en": "ECG signals (1000 fragments), Kaggle: 1,000 ten-second fragments, 17 classes, 45 MIT-BIH records."
+      },
+      "data_source_url": "https://www.kaggle.com/datasets/moisesstevend/ecg-signals-1000-fragments",
+      "tools": [
+        "Python",
+        "TensorFlow / Keras",
+        "SciPy",
+        "scikit-learn",
+        "MLflow",
+        "Databricks"
+      ],
+      "methods": {
+        "es": [
+          "Filtro pasa banda 0.5–40 Hz, remuestreo 360→180 Hz y z-score por fragmento",
+          "Partición por registro con StratifiedGroupKFold (≈64/16/20)",
+          "Extractor Conv1D común + SimpleRNN vs LSTM",
+          "Pesos de clase solo con entrenamiento",
+          "Umbral ajustado en validación (Macro F1); test abierto una sola vez",
+          "Registro de experimentos en MLflow"
+        ],
+        "en": [
+          "0.5–40 Hz band-pass filter, 360→180 Hz resampling and per-fragment z-score",
+          "Record-level split with StratifiedGroupKFold (≈64/16/20)",
+          "Shared Conv1D extractor + SimpleRNN vs LSTM",
+          "Class weights from training data only",
+          "Threshold tuned on validation (Macro F1); test opened once",
+          "Experiment tracking with MLflow"
+        ]
+      },
+      "results": [],
+      "results_status": "pendiente — sin salidas en el export de Databricks",
+      "results_source": null,
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "09-ecg-rnn-lstm",
+        "files": {
+          "notebook": "notebooks/Proyecto_Final_RNN_LSTM.py",
+          "readable": "legible/Proyecto_Final_RNN_LSTM.md",
+          "model": "data/best_ecg_model.keras"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "Métricas finales en prueba (sensibilidad, especificidad, ROC-AUC, PR-AUC, balanced accuracy) y modelo ganador.",
+        "¿Cuál de las 5 versiones del notebook es la entregada? Asumí «Versiones Finales/Proyecto_Final_RNN_LSTM.py»."
+      ]
+    },
+    {
+      "id": "medical-nlp",
+      "order": 10,
+      "featured": true,
+      "category": "deep-learning",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Deep Learning — Proyecto final",
+          "en": "Deep Learning — Final project"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Clasificación de especialidad médica: LSTM vs Bio_ClinicalBERT",
+        "en": "Medical specialty classification: LSTM vs Bio_ClinicalBERT"
+      },
+      "tagline": {
+        "es": "NLP sobre transcripciones médicas con una BiLSTM propia y un transformer clínico preentrenado",
+        "en": "NLP on medical transcriptions with a custom BiLSTM and a pre-trained clinical transformer"
+      },
+      "problem": {
+        "es": "Predecir a qué especialidad (10 clases) pertenece una transcripción médica.",
+        "en": "Predict which specialty (10 classes) a medical transcription belongs to."
+      },
+      "data": {
+        "es": "Medical Transcriptions (Kaggle, tboyle10/medicaltranscriptions), ~2,500 transcripciones de las 10 especialidades con más ejemplos.",
+        "en": "Medical Transcriptions (Kaggle, tboyle10/medicaltranscriptions), ~2,500 transcriptions from the 10 largest specialties."
+      },
+      "data_source_url": "https://www.kaggle.com/datasets/tboyle10/medicaltranscriptions",
+      "tools": [
+        "Python",
+        "TensorFlow / Keras",
+        "Hugging Face Transformers",
+        "PyTorch",
+        "scikit-learn",
+        "Databricks"
+      ],
+      "methods": {
+        "es": [
+          "Limpieza de texto, tokenización y padding (tokenizer ajustado solo con train)",
+          "Embedding + LSTM bidireccional con EarlyStopping y ReduceLROnPlateau",
+          "Pesos de clase",
+          "Bio_ClinicalBERT congelado como extractor de embeddings + clasificador liviano (el fine-tuning completo no cabía en Community Edition)",
+          "Comparación por especialidad con el mismo split"
+        ],
+        "en": [
+          "Text cleaning, tokenisation and padding (tokenizer fitted on train only)",
+          "Embedding + bidirectional LSTM with EarlyStopping and ReduceLROnPlateau",
+          "Class weights",
+          "Frozen Bio_ClinicalBERT as an embedding extractor + light classifier (full fine-tuning did not fit Community Edition)",
+          "Per-specialty comparison on the same split"
+        ]
+      },
+      "results": [
+        {
+          "es": "LSTM propia en test: accuracy 0.3678 y F1 0.36 (valores de la corrida documentada en el notebook).",
+          "en": "Custom LSTM on test: 0.3678 accuracy and 0.36 F1 (values from the run documented in the notebook)."
+        }
+      ],
+      "results_status": "parcial — falta el resultado de Bio_ClinicalBERT",
+      "results_source": "legible/Proyecto Final - NLP.md (celda de comparativa, valores de respaldo)",
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "10-medical-nlp-lstm-clinicalbert",
+        "files": {
+          "notebook": "notebooks/Proyecto Final - NLP.py",
+          "readable": "legible/Proyecto Final - NLP.md"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "Resultado de Bio_ClinicalBERT (accuracy / F1) para cerrar la comparación.",
+        "¿El F1 0.36 es macro o ponderado?"
+      ]
+    },
+    {
+      "id": "time-series-lstm",
+      "order": 11,
+      "featured": true,
+      "category": "deep-learning",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Deep Learning — Mini proyecto",
+          "en": "Deep Learning — Mini project"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Series de tiempo con LSTM: energía y acciones",
+        "en": "Time series with LSTM: energy and stocks"
+      },
+      "tagline": {
+        "es": "Pronóstico de consumo eléctrico y precios bursátiles, comparados con líneas base honestas",
+        "en": "Forecasting electricity demand and stock prices, compared against honest baselines"
+      },
+      "problem": {
+        "es": "Probar LSTM y GRU en series de tiempo reales y medir si superan a modelos simples.",
+        "en": "Test LSTM and GRU on real time series and measure whether they beat simple baselines."
+      },
+      "data": {
+        "es": "PJME hourly (Kaggle, robikscube/hourly-energy-consumption); histórico de la acción de Mastercard (CSV); American Airlines (AAL) semanal desde Alpha Vantage (~1,088 semanas desde 2005).",
+        "en": "PJME hourly (Kaggle, robikscube/hourly-energy-consumption); Mastercard stock history (CSV); American Airlines (AAL) weekly from Alpha Vantage (~1,088 weeks since 2005)."
+      },
+      "data_source_url": "https://www.kaggle.com/datasets/robikscube/hourly-energy-consumption",
+      "tools": [
+        "Python",
+        "TensorFlow / Keras",
+        "scikit-learn",
+        "pandas",
+        "Alpha Vantage API",
+        "Databricks"
+      ],
+      "methods": {
+        "es": [
+          "Partición temporal 80/20 y escalado ajustado solo con train",
+          "Ventanas de 24 horas → siguiente hora",
+          "LSTM apiladas con Dropout y EarlyStopping",
+          "LSTM vs GRU",
+          "Líneas base: persistencia, media móvil y EMA; acierto direccional y análisis de desfase"
+        ],
+        "en": [
+          "Temporal 80/20 split and scaler fitted on train only",
+          "24-hour windows → next hour",
+          "Stacked LSTMs with Dropout and EarlyStopping",
+          "LSTM vs GRU",
+          "Baselines: persistence, moving average and EMA; directional accuracy and lag analysis"
+        ]
+      },
+      "results": [
+        {
+          "es": "Consumo eléctrico (PJME), 1 hora adelante: MAE 554.08 MW, RMSE 710.87 MW, MAPE 1.91 %, R² 0.9880.",
+          "en": "Electricity demand (PJME), 1 hour ahead: MAE 554.08 MW, RMSE 710.87 MW, MAPE 1.91%, R² 0.9880."
+        },
+        {
+          "es": "Mastercard: LSTM con RMSE de USD 8.69 frente a USD 12.54 de la GRU (≈31 % menos error).",
+          "en": "Mastercard: LSTM RMSE of USD 8.69 vs USD 12.54 for the GRU (≈31% lower error)."
+        },
+        {
+          "es": "AAL: la LSTM apenas iguala a la persistencia y el acierto direccional ronda el 50 %; se documenta como resultado correcto y honestamente medido.",
+          "en": "AAL: the LSTM barely matches persistence and directional accuracy is around 50%; documented as a correct, honestly measured result."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "legible/LSTM Kaggle.md, legible/MasterCard LSTM.md, legible/Predicciones bursátiles Final.md (conclusiones)",
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "11-time-series-lstm",
+        "files": {
+          "readable": [
+            "legible/LSTM Kaggle.md",
+            "legible/MasterCard LSTM.md",
+            "legible/Predicciones bursátiles Final.md"
+          ]
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "¿Los tres notebooks son un solo entregable o tres? ¿Cuál fue el entregado?",
+        "El notebook de AAL menciona un «notebook/tutorial original»: ¿qué parte es adaptación y cuál propia?"
+      ]
+    },
+    {
+      "id": "imdb-sentiment",
+      "order": 12,
+      "featured": false,
+      "category": "deep-learning",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Deep Learning — Mini proyecto 2",
+          "en": "Deep Learning — Mini project 2"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Análisis de sentimientos IMDb con LSTM",
+        "en": "IMDb sentiment analysis with LSTM"
+      },
+      "tagline": {
+        "es": "Embedding + LSTM para clasificar reseñas positivas o negativas",
+        "en": "Embedding + LSTM to classify reviews as positive or negative"
+      },
+      "problem": {
+        "es": "Clasificar reseñas de películas como positivas o negativas (ejercicio práctico semana 8).",
+        "en": "Classify movie reviews as positive or negative (week-8 practical exercise)."
+      },
+      "data": {
+        "es": "Dataset IMDb incluido en Keras.",
+        "en": "IMDb dataset bundled with Keras."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Python",
+        "TensorFlow / Keras",
+        "Databricks"
+      ],
+      "methods": {
+        "es": [
+          "Tokenización y padding",
+          "Embedding + LSTM",
+          "Curvas de pérdida y precisión",
+          "Reconstrucción de reseñas y predicciones de prueba"
+        ],
+        "en": [
+          "Tokenisation and padding",
+          "Embedding + LSTM",
+          "Loss and accuracy curves",
+          "Review reconstruction and test predictions"
+        ]
+      },
+      "results": [],
+      "results_status": "pendiente — sin salidas en el export de Databricks",
+      "results_source": null,
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "12-imdb-sentiment-lstm",
+        "files": {
+          "readable": "legible/Proyecto.md",
+          "brief": "docs/Ejercicio práctico semana 8.pdf"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "Accuracy de validación / prueba."
+      ]
+    },
+    {
+      "id": "deep-learning-labs",
+      "order": 13,
+      "featured": false,
+      "category": "labs",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Deep Learning — Laboratorios",
+          "en": "Deep Learning — Labs"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Laboratorios de Deep Learning",
+        "en": "Deep Learning labs"
+      },
+      "tagline": {
+        "es": "XOR, optimizadores, CNN, regularización, transfer learning y GAN",
+        "en": "XOR, optimisers, CNNs, regularisation, transfer learning and GANs"
+      },
+      "problem": {
+        "es": "Ejercicios guiados del curso.",
+        "en": "Guided course exercises."
+      },
+      "data": {
+        "es": "MNIST, Fashion-MNIST, tf_flowers.",
+        "en": "MNIST, Fashion-MNIST, tf_flowers."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Python",
+        "PyTorch",
+        "TensorFlow / Keras",
+        "MLflow",
+        "Databricks"
+      ],
+      "methods": {
+        "es": [
+          "Red neuronal XOR desde cero (NumPy)",
+          "SGD vs Adam vs RMSprop en Fashion-MNIST (PyTorch)",
+          "CNN en MNIST con filtros y mapas de características",
+          "Normalización, L2 y Dropout",
+          "Transfer learning VGG16 + fine-tuning (tf_flowers)",
+          "GAN sobre MNIST"
+        ],
+        "en": [
+          "XOR neural network from scratch (NumPy)",
+          "SGD vs Adam vs RMSprop on Fashion-MNIST (PyTorch)",
+          "CNN on MNIST with filters and feature maps",
+          "Normalisation, L2 and Dropout",
+          "VGG16 transfer learning + fine-tuning (tf_flowers)",
+          "GAN on MNIST"
+        ]
+      },
+      "results": [
+        {
+          "es": "Optimizadores (Fashion-MNIST, 10 épocas): Adam y RMSprop ~88 % frente a 77.23 % de SGD.",
+          "en": "Optimisers (Fashion-MNIST, 10 epochs): Adam and RMSprop ~88% vs 77.23% for SGD."
+        },
+        {
+          "es": "Regularización (Fashion-MNIST, test): base 84.88 %, normalizado 87.57 %, L2 + Dropout 86.32 % con menor brecha de generalización.",
+          "en": "Regularisation (Fashion-MNIST, test): baseline 84.88%, normalised 87.57%, L2 + Dropout 86.32% with a smaller generalisation gap."
+        }
+      ],
+      "results_status": "verificado en el material",
+      "results_source": "legible/Laboratorio 3.md, legible/Laboratorio 6.md (conclusiones)",
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "13-deep-learning-labs",
+        "files": {
+          "readable_dir": "legible/"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": []
+    },
+    {
+      "id": "machine-learning-labs",
+      "order": 14,
+      "featured": false,
+      "category": "labs",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Machine Learning — Laboratorios",
+          "en": "Machine Learning — Labs"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Laboratorios de Machine Learning",
+        "en": "Machine Learning labs"
+      },
+      "tagline": {
+        "es": "Del feature engineering transaccional a regresión, clasificación, clustering, reglas de asociación y redes",
+        "en": "From transactional feature engineering to regression, classification, clustering, association rules and neural nets"
+      },
+      "problem": {
+        "es": "Ejercicios guiados del curso.",
+        "en": "Guided course exercises."
+      },
+      "data": {
+        "es": "Transacciones y clientes de tarjeta, advertising, crédito, cáncer de mama, Social Network Ads, 50 Startups, Air Passengers, groceries, precios de casas.",
+        "en": "Card transactions and clients, advertising, credit, breast cancer, Social Network Ads, 50 Startups, Air Passengers, groceries, house prices."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Python",
+        "pandas",
+        "scikit-learn",
+        "statsmodels",
+        "mlxtend",
+        "apyori",
+        "Keras",
+        "Databricks"
+      ],
+      "methods": {
+        "es": [
+          "Tabla base cliente-mes y variables mensuales (Lab 2)",
+          "Regresión logística, árbol de decisión, Naive Bayes, KNN (Lab 2.1–2.4)",
+          "Regresión lineal, ARIMA/SARIMAX, Random Forest con oversampling (Lab 3.1–3.3)",
+          "K-Means, PCA, Apriori (Lab 4.1–4.3)",
+          "Red neuronal para precios de casas (Lab 5.1)"
+        ],
+        "en": [
+          "Client-month base table and monthly features (Lab 2)",
+          "Logistic regression, decision tree, Naive Bayes, KNN (Labs 2.1–2.4)",
+          "Linear regression, ARIMA/SARIMAX, Random Forest with oversampling (Labs 3.1–3.3)",
+          "K-Means, PCA, Apriori (Labs 4.1–4.3)",
+          "Neural network for house prices (Lab 5.1)"
+        ]
+      },
+      "results": [],
+      "results_status": "pendiente — sin salidas en el export de Databricks",
+      "results_source": null,
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "14-machine-learning-labs",
+        "files": {
+          "readable_dir": "legible/"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": []
+    },
+    {
+      "id": "streaming-ingestion-bronze",
+      "order": 15,
+      "featured": false,
+      "category": "data-engineering",
+      "context": {
+        "type": {
+          "es": "Práctica universitaria",
+          "en": "University coursework"
+        },
+        "course": {
+          "es": "Arquitectura de Datos",
+          "en": "Data Architecture"
+        },
+        "team": {
+          "es": "Proyecto en grupo (Grupo 13)",
+          "en": "Group project (Group 13)"
+        },
+        "authorship_note": {
+          "es": "Trabajo universitario; no se afirma autoría individual exclusiva.",
+          "en": "University work; no claim of sole individual authorship."
+        },
+        "date": null
+      },
+      "title": {
+        "es": "Ingesta de eventos Confluent → capa bronze (inicio)",
+        "en": "Confluent events → bronze layer ingestion (setup)"
+      },
+      "tagline": {
+        "es": "Configuración de Kafka (Confluent Cloud) y Azure Data Lake para una arquitectura medallion",
+        "en": "Kafka (Confluent Cloud) and Azure Data Lake setup for a medallion architecture"
+      },
+      "problem": {
+        "es": "Ingerir eventos GPS y de estado de vehículos eléctricos hacia la capa bronze.",
+        "en": "Ingest electric-vehicle GPS and status events into the bronze layer."
+      },
+      "data": {
+        "es": "Tópicos acme-ev-gps-events y acme-ev-status-events.",
+        "en": "Topics acme-ev-gps-events and acme-ev-status-events."
+      },
+      "data_source_url": null,
+      "tools": [
+        "Databricks",
+        "Confluent Cloud (Kafka)",
+        "Azure Data Lake Storage Gen2"
+      ],
+      "methods": {
+        "es": [
+          "Rutas abfss para bronze y checkpoints"
+        ],
+        "en": [
+          "abfss paths for bronze and checkpoints"
+        ]
+      },
+      "results": [],
+      "results_status": "incompleto — el notebook solo contiene la configuración",
+      "results_source": null,
+      "cover": null,
+      "gallery": [],
+      "local": {
+        "root": "/home/tars/Proyectos/Data_Analytics_Projects/organizado",
+        "folder": "15-streaming-ingestion-bronze",
+        "files": {
+          "readable": "legible/01_ingesta_confluent_to_bronze.md"
+        }
+      },
+      "links": {
+        "repo": null,
+        "demo": null
+      },
+      "open_questions": [
+        "¿Hay más notebooks (lectura del stream, silver/gold)? El exportado solo tiene 2 celdas de configuración."
+      ]
+    }
+  ]
+}
