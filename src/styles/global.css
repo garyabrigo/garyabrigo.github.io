@@ -169,6 +169,10 @@ a:hover, a:focus {
   text-decoration: none;
 }
 
+.btn:active {
+  transform: scale(0.98);
+}
+
 .btn-primary {
   background: var(--accent);
   color: var(--ink);
@@ -240,5 +244,21 @@ a:hover, a:focus {
   }
   .container {
     padding: 0 1rem;
+  }
+}
+
+/* Tagline word activation (set up by scripts/cinematic.ts). Muted -> ink, both pass AA. */
+.has-cinematic .sw-tagline .sw {
+  color: var(--muted);
+  transition: color 0.7s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.has-cinematic .sw-tagline .sw.sw-lit {
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-cinematic .sw-tagline .sw {
+    transition: none;
   }
 }

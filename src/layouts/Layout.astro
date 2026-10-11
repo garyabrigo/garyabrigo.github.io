@@ -145,6 +145,15 @@ const labels = nav[lang];
     </script>
 
     <script>
+      // Cinematic scroll layer: skipped entirely (and never downloaded) for reduced motion / Save-Data.
+      (function () {
+        const conn = (navigator as any).connection;
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches || conn?.saveData) return;
+        import('../scripts/cinematic').then(m => m.init()).catch(() => {});
+      })();
+    </script>
+
+    <script>
       (function () {
         const navToggle = document.querySelector('.nav-toggle') as HTMLButtonElement;
         const nav = document.getElementById('site-nav');

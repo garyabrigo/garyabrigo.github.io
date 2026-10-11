@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "cinematic-scroll-storytelling": {
+      "source": "mengto/skills",
+      "sourceType": "github",
+      "skillPath": "agent-skills/web-design/cinematic-scroll-storytelling/SKILL.md",
+      "computedHash": "e5e835b5c3eb87e2f539f54872d00d8d2f540d8c250e64b52edbf89d1f6cfb2d"
+    },
+    "landing-page-design": {
+      "source": "elayadesign/ai-design-skills",
+      "sourceType": "github",
+      "skillPath": "skills/landing-page-design/SKILL.md",
+      "computedHash": "6b5ab91701796daa00a5f357785cf9ca1851cc9588eb2d854c600b5d68be11d6"
+    },
+    "scroll-world": {
+      "source": "oso95/scroll-world",
+      "sourceType": "github",
+      "skillPath": "skills/scroll-world/SKILL.md",
+      "computedHash": "e7ea15d223b6a687840306ab4e3e48ce507df3094c8e78742f6f8b84ae7face0"
+    }
+  }
+}

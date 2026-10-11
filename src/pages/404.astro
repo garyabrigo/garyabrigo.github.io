@@ -1,0 +1,37 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { personal } from '../lib/data';
+---
+
+<Layout lang="es" title={`404 · ${personal.name}`} description="Página no encontrada / Page not found" path="/">
+  <section class="section not-found">
+    <div class="container not-found-inner">
+      <p class="mono not-found-code">404</p>
+      <h1>Esta página no existe</h1>
+      <p lang="en">This page does not exist.</p>
+      <div class="not-found-actions">
+        <a href="/" class="btn btn-primary">Volver al inicio</a>
+        <a href="/en/" class="btn btn-secondary" lang="en">Back to home</a>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+  .not-found-code {
+    color: var(--accent-text);
+    font-size: 1.1rem;
+    margin: 0 0 0.5rem;
+  }
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+</style>
