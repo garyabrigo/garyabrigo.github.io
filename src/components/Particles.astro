@@ -11,58 +11,39 @@
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const conn = navigator.connection as any;
     const saveData = conn?.saveData || /(^|-)2g$/.test(conn?.effectiveType ?? '');
-
     if (reduce.matches || saveData) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark' ||
-      (!document.documentElement.getAttribute('data-theme') && prefersDark);
-
-    const colors = isDark
-      ? ['#0E4F4F', '#3FA7A0', '#F2913F']
-      : ['#0E4F4F', '#3FA7A0', '#E8741E'];
+    const FRAME_MS = 1000 / 30;
+    const LINK_DIST_SQ = 100 * 100;
+    const PARALLAX = 0.15;
 
     let width = 0;
     let height = 0;
-    let dpr = Math.min(window.devicePixelRatio || 1, 2);
-    let particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      r: number;
-      color: string;
-      alpha: number;
-    }> = [];
+    let particles: Array<{ x: number; y: number; vx: number; vy: number; r: number; color: string; alpha: number }> = [];
     let shiftY = 0;
     let rafId = 0;
-    let visible = true;
+    let lastDraw = 0;
+    let hidden = false;
+    let covered = false;
 
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = window.innerWidth;
-      height = window.innerHeight;
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      canvas.style.width = width + 'px';
-      canvas.style.height = height + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      createParticles();
+    function palette() {
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      return dark ? ['#0E4F4F', '#3FA7A0', '#F2913F'] : ['#0E4F4F', '#3FA7A0', '#E8741E'];
     }
 
     function createParticles() {
-      const area = (width * height) / 10000;
-      const count = Math.min(Math.max(Math.floor(area * 0.8), 30), 90);
+      const colors = palette();
+      const count = Math.min(Math.max(Math.floor((width * height) / 10000 * 0.5), 20), 45);
       particles = [];
       for (let i = 0; i < count; i++) {
         particles.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * 0.25,
-          vy: (Math.random() - 0.5) * 0.25,
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: (Math.random() - 0.5) * 0.5,
           r: Math.random() * 1.5 + 0.5,
           color: colors[Math.floor(Math.random() * colors.length)],
           alpha: Math.random() * 0.4 + 0.2
@@ -70,77 +51,93 @@
       }
     }
 
-    function draw() {
-      if (!visible) return;
-      ctx.clearRect(0, 0, width, height);
+    // Backing store at 1x: these are sub-3px dots and hairlines, 2x only quadruples fill cost.
+    function resize() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      createParticles();
+    }
 
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
+    function draw(now: number) {
+      rafId = 0;
+      if (hidden || covered) return;
+      rafId = requestAnimationFrame(draw);
+      if (now - lastDraw < FRAME_MS) return;
+      lastDraw = now;
+
+      ctx!.clearRect(0, 0, width, height);
+      const off = shiftY * PARALLAX;
+
+      for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
-
-        // Parallax: background moves slower than scroll, opposite direction
-        const parallaxY = p.y - shiftY * 0.15;
-
         if (p.x < 0) p.x = width;
-        if (p.x > width) p.x = 0;
-        if (parallaxY < 0) p.y = height + shiftY * 0.15;
-        if (parallaxY > height) p.y = shiftY * 0.15;
+        else if (p.x > width) p.x = 0;
+        if (p.y - off < 0) p.y = height + off;
+        else if (p.y - off > height) p.y = off;
 
-        ctx.beginPath();
-        ctx.arc(p.x, parallaxY, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.fill();
+        ctx!.globalAlpha = p.alpha;
+        ctx!.fillStyle = p.color;
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y - off, p.r, 0, Math.PI * 2);
+        ctx!.fill();
       }
 
-      // Connect nearby particles with subtle lines
-      ctx.lineWidth = 0.6;
+      ctx!.lineWidth = 0.6;
       for (let i = 0; i < particles.length; i++) {
+        const a = particles[i];
         for (let j = i + 1; j < particles.length; j++) {
-          const a = particles[i];
           const b = particles[j];
-          const dy = (a.y - shiftY * 0.15) - (b.y - shiftY * 0.15);
           const dx = a.x - b.x;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y - shiftY * 0.15);
-            ctx.lineTo(b.x, b.y - shiftY * 0.15);
-            ctx.strokeStyle = a.color;
-            ctx.globalAlpha = (1 - dist / 100) * 0.12;
-            ctx.stroke();
+          const dy = a.y - b.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < LINK_DIST_SQ) {
+            ctx!.globalAlpha = (1 - d2 / LINK_DIST_SQ) * 0.12;
+            ctx!.strokeStyle = a.color;
+            ctx!.beginPath();
+            ctx!.moveTo(a.x, a.y - off);
+            ctx!.lineTo(b.x, b.y - off);
+            ctx!.stroke();
           }
         }
       }
+      ctx!.globalAlpha = 1;
+    }
 
-      ctx.globalAlpha = 1;
-      rafId = requestAnimationFrame(draw);
+    function sync() {
+      if (!rafId && !hidden && !covered) rafId = requestAnimationFrame(draw);
     }
 
     resize();
-    draw();
+    sync();
 
-    window.addEventListener('resize', resize, { passive: true });
-
-    let ticking = false;
-    window.addEventListener('scroll', () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        shiftY = window.scrollY;
-        ticking = false;
-      });
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(resize, 150);
     }, { passive: true });
 
-    new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible && !rafId) draw();
-      else if (!visible && rafId) {
-        cancelAnimationFrame(rafId);
-        rafId = 0;
-      }
-    }).observe(canvas);
+    window.addEventListener('scroll', () => { shiftY = window.scrollY; }, { passive: true });
+
+    document.addEventListener('visibilitychange', () => {
+      hidden = document.hidden;
+      sync();
+    });
+
+    // While the (opaque) hero fills the viewport the particles are invisible, so don't draw them.
+    const hero = document.querySelector('.hero');
+    if (hero) {
+      const update = () => {
+        const r = hero.getBoundingClientRect();
+        covered = r.top <= 70 && r.bottom >= window.innerHeight - 2;
+        sync();
+      };
+      new IntersectionObserver(update, { threshold: Array.from({ length: 21 }, (_, i) => i / 20) }).observe(hero);
+      window.addEventListener('scroll', update, { passive: true });
+      update();
+    }
   })();
 </script>
 

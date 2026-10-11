@@ -87,7 +87,8 @@ const { lang } = Astro.props;
   (function () {
     const video = document.querySelector('[data-hero-video]') as HTMLVideoElement;
     const hero = video?.closest('.hero') as HTMLElement;
-    if (!video || !hero) return;
+    const heroBg = hero?.querySelector('.hero-bg') as HTMLElement;
+    if (!video || !hero || !heroBg) return;
 
     const reduce = matchMedia('(prefers-reduced-motion: reduce)');
     const conn = navigator.connection as any;
@@ -97,7 +98,8 @@ const { lang } = Astro.props;
 
     const w = window.innerWidth;
     const portrait = matchMedia('(orientation: portrait)').matches;
-    const size = (w <= 700 && portrait) ? 'mobile-540' : (w * devicePixelRatio >= 2400 ? '1920' : '1280');
+    // 720p is plenty for a dark abstract mesh and decodes far cheaper than 1080p (no HW decode on many Linux setups).
+    const size = (w <= 700 && portrait) ? 'mobile-540' : '1280';
 
     video.poster = `/assets/hero/hero-poster-${size}.webp`;
     for (const [ext, type] of [['webm', 'video/webm; codecs=vp9'], ['mp4', 'video/mp4']]) {
@@ -119,7 +121,7 @@ const { lang } = Astro.props;
       ticking = true;
       requestAnimationFrame(() => {
         const y = Math.min(scrollY, hero.offsetHeight);
-        hero.style.setProperty('--hero-shift', (y * 0.3).toFixed(1));
+        heroBg.style.setProperty('--hero-shift', (y * 0.3).toFixed(1));
         ticking = false;
       });
     }, { passive: true });
