@@ -159,26 +159,21 @@ const categoryList = [...new Set(more.map(p => p.category))];
   .more-row:hover,
   .more-row:focus {
     padding-left: 0.75rem;
-    background: rgba(14, 79, 79, 0.03);
+    background: rgba(255, 255, 255, 0.04);
     text-decoration: none;
-  }
-
-  [data-theme="dark"] .more-row:hover,
-  [data-theme="dark"] .more-row:focus {
-    background: rgba(63, 167, 160, 0.05);
   }
 
   .more-category {
     width: 160px;
     flex-shrink: 0;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--accent-text);
   }
 
   .more-title {
     flex: 1;
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-sans);
     font-size: 1.25rem;
     font-weight: 600;
   }
@@ -186,7 +181,7 @@ const categoryList = [...new Set(more.map(p => p.category))];
   .more-tools {
     width: 220px;
     flex-shrink: 0;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.8rem;
     color: var(--muted);
     text-align: right;

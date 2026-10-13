@@ -54,12 +54,8 @@ const m = meta[lang];
 
 <style>
   .contact-section {
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(14, 79, 79, 0.04) 100%);
+    background: transparent;
     text-align: center;
-  }
-
-  [data-theme="dark"] .contact-section {
-    background: linear-gradient(180deg, var(--bg) 0%, rgba(63, 167, 160, 0.04) 100%);
   }
 
   .contact-inner {
@@ -84,7 +80,7 @@ const m = meta[lang];
   }
 
   .contact-email {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
   }
 

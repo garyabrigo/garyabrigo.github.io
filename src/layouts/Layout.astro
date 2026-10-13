@@ -21,11 +21,13 @@ const labels = nav[lang];
 ---
 
 <!DOCTYPE html>
-<html lang={lang} data-theme="light">
+<html lang={lang} data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#000000" />
     <meta name="description" content={description} />
     <meta name="author" content={personal.name} />
     <title>{title}</title>
@@ -42,9 +44,9 @@ const labels = nav[lang];
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
@@ -69,19 +71,6 @@ const labels = nav[lang];
           <a href={otherPath} class="lang-switch" lang={otherLang} aria-label={otherLang === 'es' ? 'Cambiar a español' : 'Switch to English'}>
             {otherLang.toUpperCase()}
           </a>
-          <button class="theme-toggle" aria-label={lang === 'es' ? 'Cambiar tema' : 'Toggle theme'} type="button">
-            <span class="theme-track" aria-hidden="true">
-              <span class="theme-thumb">
-                <svg class="theme-svg theme-svg-sun" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <circle cx="12" cy="12" r="5" fill="currentColor" />
-                  <path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-                </svg>
-                <svg class="theme-svg theme-svg-moon" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true">
-                  <path fill="currentColor" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-                </svg>
-              </span>
-            </span>
-          </button>
           <button
             class="nav-toggle"
             type="button"
@@ -119,10 +108,6 @@ const labels = nav[lang];
     </footer>
     <script>
       (function () {
-        const stored = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = stored || (prefersDark ? 'dark' : 'light');
-        document.documentElement.setAttribute('data-theme', theme);
         document.documentElement.classList.add('fonts-loading');
         if (document.fonts) {
           document.fonts.ready.then(function () {
@@ -132,17 +117,6 @@ const labels = nav[lang];
       })();
     </script>
     <Particles />
-
-    <script>
-      const toggle = document.querySelector('.theme-toggle');
-      const html = document.documentElement;
-      toggle?.addEventListener('click', () => {
-        const current = html.getAttribute('data-theme') || 'light';
-        const next = current === 'light' ? 'dark' : 'light';
-        html.setAttribute('data-theme', next);
-        localStorage.setItem('theme', next);
-      });
-    </script>
 
     <script>
       // Cinematic scroll layer: skipped entirely (and never downloaded) for reduced motion / Save-Data.
@@ -216,7 +190,7 @@ const labels = nav[lang];
   }
 
   .logo {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-weight: 700;
     font-size: 1.25rem;
     color: var(--ink);
@@ -256,7 +230,7 @@ const labels = nav[lang];
   }
 
   .lang-switch {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: var(--font-mono);
     font-weight: 600;
     font-size: 0.85rem;
     color: var(--muted);
@@ -270,92 +244,6 @@ const labels = nav[lang];
   .lang-switch:focus {
     color: var(--brand);
     border-color: var(--brand);
-  }
-
-  .theme-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 1.75rem;
-    border-radius: 999px;
-    border: 1px solid var(--chip-border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    padding: 0.15rem;
-    transition: border-color 0.3s ease, background 0.3s ease;
-  }
-
-  .theme-toggle:hover,
-  .theme-toggle:focus {
-    border-color: var(--brand);
-  }
-
-  .theme-track {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 999px;
-    background: var(--chip-border);
-    transition: background 0.3s ease;
-  }
-
-  .theme-thumb {
-    position: absolute;
-    top: 0.125rem;
-    left: 0.125rem;
-    width: calc(100% - 0.25rem);
-    height: calc(100% - 0.25rem);
-    border-radius: 50%;
-    background: var(--surface);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translateX(0) rotate(0deg);
-    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease;
-    box-shadow: 0 1px 3px var(--shadow);
-  }
-
-  .theme-svg {
-    position: absolute;
-    transition: opacity 0.25s ease, transform 0.35s ease;
-  }
-
-  .theme-svg-sun {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-
-  .theme-svg-moon {
-    opacity: 0;
-    transform: scale(0.5) rotate(-90deg);
-  }
-
-  [data-theme="dark"] .theme-track {
-    background: var(--brand);
-  }
-
-  [data-theme="dark"] .theme-thumb {
-    transform: translateX(1.25rem) rotate(360deg);
-  }
-
-  [data-theme="dark"] .theme-svg-sun {
-    opacity: 0;
-    transform: scale(0.5) rotate(90deg);
-  }
-
-  [data-theme="dark"] .theme-svg-moon {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .theme-thumb,
-    .theme-svg,
-    .theme-track {
-      transition: none;
-    }
   }
 
   .nav-toggle {

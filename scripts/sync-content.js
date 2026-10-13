@@ -13,8 +13,9 @@ console.log('Synced projects.json');
 fs.mkdirSync(destAssets, { recursive: true });
 
 // Working/reference material that the site never links to (raw hero footage,
-// design-review screenshots) -- keep it out of public/ and dist/.
-const EXCLUDED_DIRS = new Set(['source', 'preview']);
+// design-review screenshots, and the colour hero set that public/hero/ replaces
+// with a monochrome re-encode) -- keep it out of public/ and dist/.
+const EXCLUDED_DIRS = new Set(['source', 'preview', 'hero']);
 
 function syncDir(src, dest) {
   fs.mkdirSync(dest, { recursive: true });
